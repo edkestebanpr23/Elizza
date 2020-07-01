@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Linking, Alert, Platform } from 'react-native';
-import { Container, Content, Text, Image, Icon, Button } from "native-base";
+import { Container, Content, Text, Image, Icon, Button, Left, ListItem, Body, ActionSheet } from "native-base";
 import { main as color } from "../../data/colors";
 import { customerView as dic } from "../../data/languague";
 
@@ -10,6 +10,7 @@ const Customer = ({ route }) => {
     const { customer, iLang } = route.params;
     const customerIcon = customer.sex === 'male' ? 'user' : 'user-female';
 
+    // Realizar una llamada a un teléfono colombiano
     const linkingTel = phone => {
         let phoneNumber = phone;
         if (Platform.OS !== 'android') {
@@ -29,9 +30,11 @@ const Customer = ({ route }) => {
             .catch(err => console.log(err));
     };
 
+    // Abre WhatsApp en el número de teléfono registrado, este debe tener el indicativo del país
     const linkingWhatsApp = phone => {
         console.log('Telefono:', phone);
-        Linking.openURL(`whatsapp://send?text=Prueba&phone=${phone}`).then((data) => {
+        let mobile = Platform.OS == 'ios' ? phone : '+' + phone;
+        Linking.openURL(`whatsapp://send?phone=${mobile}`).then((data) => {
             console.log('WhatsApp Opened', data);
         }).catch(() => {
             alert('Make sure WhatsApp installed on your device');
@@ -39,40 +42,86 @@ const Customer = ({ route }) => {
     };
     // Dina: 311 737 5679
 
+    // Si la persona tiene 2 números de teléfono, muestra un ActionSheet para seleccionar número
+    const prepareCall = () => {
+        if (customer.telephone2 !== '') {
+            defineNumberToCall(customer.telephone, customer.telephone2);
+        } else {
+            linkingTel(customer.telephone);
+        }
+    }
+
+    // ActionSheet con números de telefono, aquí se selecciona el número a llamar
+    const defineNumberToCall = (tel1, tel2) => {
+        const buttons = [
+            { text: tel1 },
+            { text: tel2 },
+            { text: dic.cancel[iLang] }
+        ];
+        const cancelIndex = 2;
+
+        ActionSheet.show(
+            {
+                options: buttons,
+                cancelButtonIndex: cancelIndex,
+                title: dic.selectNumber[iLang]
+            },
+            (buttonIndex) => {
+                if (buttonIndex == 0) {
+                    console.log('Llamar ' + tel1);
+                } else if (buttonIndex == 1) {
+                    console.log('Llamar ' + tel2);
+                } else {
+                    console.log('Cancelado');
+                }
+            }
+
+        );
+    };
 
     return (
         <Container>
             <Content>
                 <View>
-                    <View style={styles.photoContainer}>
-                        <View style={styles.photoView}>
-                            <Icon name='photo' type='FontAwesome' style={{ fontSize: 80, color: color.grad[3] }} />
-                        </View>
-                        <View style={styles.descView}>
-                            <View style={styles.info}>
-                                <View>
-                                    <Text style={styles.textInfo}>
-                                        <Icon name={customerIcon} type='SimpleLineIcons' style={{ color: color.grad[9] }} />
-                                        <Text style={styles.textInfoRes}> {customer.name} </Text>
-                                    </Text>
-                                </View>
-                                {/* <Text style={styles.textInfoRes}>Bogotá, Cundinamarca</Text> */}
-                                <Text style={styles.textInfo} onPress={() => linkingTel(customer.telephone)}>{dic.telephone[iLang]}:
-                                    <Text style={styles.textInfoRes}> {customer.telephone}</Text>
-                                </Text>
-                                {
-                                    customer.telephone2 !== '' ? (
-                                        <Text style={styles.textInfo} onPress={() => linkingTel(customer.telephone2)}>{dic.telephone[iLang]} 2:
-                                            <Text style={styles.textInfoRes}> {customer.telephone2}</Text>
-                                        </Text>
-                                    ) : (<></>)
-                                }
-                            </View>
-                        </View>
+                    <View style={{ marginTop: 20, marginLeft: 20 }}>
+                        <Text style={{ fontSize: 24, color: color.dark }}>
+                            {
+                                customer.sex === 'male' ? (
+                                    <Icon name='ios-man' />
+                                ) : (
+                                    <Icon name='ios-woman' />
+                                )
+                            }
+                            {' '} {customer.name}
+                        </Text>
+                        <Text style={{ color: color.main, paddingLeft: '10%' }}>{customer.description}</Text>
                     </View>
-                    <Button onPress={() => linkingWhatsApp('57' + customer.telephone)}>
-                        <Text>WhatsApp</Text>
-                    </Button>
+
+                    <ListItem icon onPress={() => prepareCall()}>
+                        <Left>
+                            <Button style={{ backgroundColor: "#4CAF50" }}>
+                                <Icon active name="ios-call" type='Ionicons' />
+                            </Button>
+                        </Left>
+                        <Body>
+                            <Text>{dic.call[iLang]}</Text>
+                        </Body>
+                    </ListItem>
+
+                    {
+                        customer.whatsapp !== 'none' ? (
+                    <ListItem icon onPress={() => linkingWhatsApp('57' + customer.telephone)}>
+                        <Left>
+                            <Button style={{ backgroundColor: "#49c65c" }}>
+                                <Icon active name="whatsapp" type='FontAwesome5' />
+                            </Button>
+                        </Left>
+                        <Body>
+                            <Text>{dic.sendMessage[iLang]}</Text>
+                        </Body>
+                    </ListItem>
+                        ) : (<></>)
+                    }
                 </View>
             </Content>
         </Container>
@@ -80,45 +129,7 @@ const Customer = ({ route }) => {
 }
 
 const styles = StyleSheet.create({
-    photoContainer: {
-        flexDirection: 'row'
-    },
-    photoView: {
-        flexBasis: '40%', // Así toma solo la mitad de la pantalla
-        alignItems: 'center',
-        justifyContent: 'center'
-        // flexWrap: 'wrap'
-    },
-    descView: {
-        flexBasis: '60%'
-    },
-    photo: {
-        width: '100%',
-        height: 200
-    },
-    description: {
-        marginHorizontal: 5,
-        marginTop: 5,
-    },
-    textDescription: {
-        fontSize: 16
-    },
-    info: {
-        paddingVertical: 5,
-        marginHorizontal: 5
-    },
-    infoItem: {
-        marginBottom: 10
-    },
-    textInfo: {
-        fontSize: 16,
-        fontWeight: 'bold',
-        marginBottom: 5
-    },
-    textInfoRes: {
-        fontWeight: 'normal',
-        marginBottom: 5
-    }
+    
 });
 
 export default Customer;

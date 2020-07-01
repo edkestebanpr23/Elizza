@@ -33,7 +33,7 @@ const SocialStack = () => {
                     headerStyle: {
                         backgroundColor: color.grad[9],
                     },
-                    headerRight: () => <Text style={{ color: color.light, marginRight: 15 }}>Buscar</Text>
+                    // headerRight: () => <Text style={{ color: color.light, marginRight: 15 }}>Buscar</Text>
                     // headerBackTitle: dic.title[iLang],
                     // headerBackTitleVisible: true,
                     // headerTransparent: false
@@ -89,7 +89,7 @@ const SocialStack = () => {
                     headerStyle: {
                         backgroundColor: color.grad[9],
                     },
-                    headerRight: () => <Text style={{ color: color.light, marginRight: 15 }}>Buscar</Text>
+                    // headerRight: () => <Text style={{ color: color.light, marginRight: 15 }}>Buscar</Text>
                 }}
             >
 

@@ -29,6 +29,7 @@ const petitions = {
         name
         telephone
         telephone2
+        whatsapp
         description
         sex
         active

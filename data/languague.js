@@ -50,6 +50,7 @@ const language = {
         cancel: ['Cancelar', 'Cancel'],
         select: ['Seleccionar imagen de perfil', 'Select profile picture']
     },
+    // Social
     socialStack: {
         titleWorker: ['Clientes', 'Clients'],
         titleAdmin: ['Roles y clientes', 'Roles & Clients'],
@@ -80,9 +81,26 @@ const language = {
         woman: ['Mujer', 'Woman'],
         description: ['Notas/Descripción', 'Description/Notes'],
         descriptionPlace: ['Añade una descripción del cliente', 'Add a customer description'],
+        whatsappInfo: ['Número de WhatsApp', 'WhatsApp number'],
+        tel1: ['Mismo que teléfono 1', 'Use phone number 1'],
+        tel2: ['Mismo que teléfono 2', 'Use phone number 2'],
+        other: ['Otro', 'Other'],
+        any: ['Sin WhatsApp', 'Without WhatsApp']
     },
     customerView: {
-        telephone: ['Teléfono', 'Telephone']
+        telephone: ['Teléfono', 'Telephone'],
+        description: ['Descripción', 'Description'],
+        sendMessage: ['Enviar un mensaje', 'Send a message'],
+        call: ['Llamar', 'Call'],
+        cancel: ['Cancelar', 'Cancel'],
+        selectNumber: ['Selecciona un número de teléfono', 'Select phone number']
+    },
+    // Settings
+    settingsView: {
+        language: ['Idioma', 'Language'],
+        closeSession: ['Cerrar Sesión', 'Sign Out'],
+        selectLang: ['Selecciona idioma', 'Select language'],
+        cancel: ['Cancelar', 'Cancel'],
     }
 
 };

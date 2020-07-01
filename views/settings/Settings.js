@@ -1,25 +1,58 @@
 import React, { useContext } from 'react';
-import { StyleSheet, View } from 'react-native';
-import { Container, Button, Text } from "native-base";
-import { useNavigation } from "@react-navigation/native";
-import gS from "../../styles/globalStyles";
+import { Container, Content, Button, Text, ActionSheet, Left, Right, Body, ListItem, Icon } from "native-base";
+import { settingsView as dic } from "../../data/languague";
+import { main as color } from "../../data/colors";
 import GlobalContext from "../../context/global/globalContext";
 
 
 console.disableYellowBox = true;
 const Settings = () => {
-    const navigation = useNavigation();
-    const { killSession } = useContext(GlobalContext);
+    const { iLang, setILang, killSession } = useContext(GlobalContext);
 
+    // Cambiar de idioma
+    const changeLanguage = () => {
+        const buttons = [
+            { text: 'Español' },
+            { text: 'English' },
+            { text: dic.cancel[iLang] }
+        ];
+        const cancelIndex = 2;
 
+        ActionSheet.show(
+            {
+                options: buttons,
+                cancelButtonIndex: cancelIndex,
+                title: dic.selectLang[iLang]
+            },
+            (buttonIndex) => {
+                if (buttonIndex == 0 || buttonIndex == 1) {
+                    setILang(buttonIndex);
+                }
+            }
+
+        );
+    };
     return (
-        <Container style={gS.container}>
-            <View style={gS.centerVerticalView}>
-                <Button full onPress={() => killSession()}>
-                    <Text>Cerrar Sesión</Text>
-                </Button>
+        <Container>
+            <Content>
+                <ListItem icon onPress={changeLanguage}>
+                    <Left>
+                        <Button style={{ backgroundColor: color.dark }}>
+                            <Icon active name="md-globe" type='Ionicons' />
+                        </Button>
+                    </Left>
+                    <Body>
+                        <Text>{dic.language[iLang]}</Text>
+                    </Body>
+                </ListItem>
 
-            </View>
+                <ListItem icon onPress={killSession}>
+                    <Body style={{ alignItems: 'center' }}>
+                        <Text style={{ color: 'red', fontWeight: 'bold' }}>{dic.closeSession[iLang]}</Text>
+                    </Body>
+                </ListItem>
+
+            </Content>
         </Container>
     );
 }

@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { StyleSheet, View, Keyboard, TouchableWithoutFeedback, ScrollView, Image } from 'react-native';
-import { Container, Form, Input, Button, Item, Label, Text, H1, Toast, ListItem, Left, Icon as IconNB, Body, Right, Switch, Textarea } from "native-base";
+import { Container, Form, Input, Button, Item, Label, Text, H1, Toast, ListItem, Left, Icon as IconNB, Body, Right, Switch, Textarea, Radio } from "native-base";
 import Icon from "react-native-vector-icons/AntDesign";
 import gS from "../../styles/globalStyles";
 import { main as color } from "../../data/colors";
@@ -23,6 +23,9 @@ const createCustomer = () => {
     const [name, setName] = useState('');
     const [telephone, setTelephone] = useState('');
     const [telephone2, setTelephone2] = useState('');
+    const [whatsapp, setWhatsapp] = useState('');
+    const [whatsappOpt, setWhatsappOpt] = useState(1);
+
     const [woman, setWoman] = useState(false);
     const [description, setDescription] = useState('');
     const [_message, setMessage] = useState(null);
@@ -79,12 +82,23 @@ const createCustomer = () => {
 
     // Función para registrar un usuario
     const singUp = async () => {
-        console.log('Registrando');
-        // console.log(name + " ___ " + document + " ___ " + password + " ___ " + passwordRe + " ___ " + selectedCountry)
+        let _whatsapp = '';
+
         // Validar datos del formulario
         if (name === '' || telephone === '' || telephone === '' || telephone === '') {
             console.log("Todos los datos son obligatorios");
             return;
+        }
+
+        // Verificar WhatsApp
+        if (whatsappOpt === 1) {
+            _whatsapp = telephone;
+        } else if (whatsappOpt === 2) {
+            _whatsapp = telephone2;
+        } else if (whatsappOpt === 0) {
+            _whatsapp = 'none';
+        } else {
+            _whatsapp = whatsapp;
         }
 
         // Almacenar en servidor
@@ -97,6 +111,7 @@ const createCustomer = () => {
                         telephone2: telephone2,
                         sex: woman ? 'female' : 'male',
                         description: description,
+                        whatsapp: _whatsapp
                         // worker: '5ef26266ed48391faaa959e1'
                     }
                 }
@@ -144,6 +159,8 @@ const createCustomer = () => {
                                 />
                             </Item>
 
+
+
                             {/* Telefono */}
                             <Item floatingLabel underline={false} style={styles.itemForm} >
                                 <Label style={styles.label}>{dic.telephone[iLang]}</Label>
@@ -174,8 +191,83 @@ const createCustomer = () => {
                                 />
                             </Item>
 
+
+                            {/* WhatsApp Option */}
+                            <View>
+                                <ListItem icon>
+                                    <Left>
+                                        <Button style={{ backgroundColor: "#49c65c" }}>
+                                            <IconNB active name="whatsapp" type='FontAwesome5' />
+                                        </Button>
+                                    </Left>
+                                    <Body>
+                                        <Text>{dic.whatsappInfo[iLang]}</Text>
+                                    </Body>
+                                </ListItem>
+
+                                <ListItem onPress={() => setWhatsappOpt(1)}>
+                                    <Left>
+                                        <Text>{dic.tel1[iLang]}</Text>
+                                    </Left>
+                                    <Right>
+                                        <Radio selected={whatsappOpt === 1 ? true : false} />
+                                    </Right>
+                                </ListItem>
+
+                                {
+                                    telephone2 !== '' ? (
+                                        <ListItem onPress={() => setWhatsappOpt(2)}>
+                                            <Left>
+                                                <Text>{dic.tel2[iLang]}</Text>
+                                            </Left>
+                                            <Right>
+                                                <Radio selected={whatsappOpt === 2 ? true : false} />
+                                            </Right>
+                                        </ListItem>
+                                    ) : (<></>)
+                                }
+
+                                <ListItem onPress={() => setWhatsappOpt(0)}>
+                                    <Left>
+                                        <Text>{dic.any[iLang]}</Text>
+                                    </Left>
+                                    <Right>
+                                        <Radio selected={whatsappOpt === 0 ? true : false} />
+                                    </Right>
+                                </ListItem>
+
+                                <ListItem onPress={() => setWhatsappOpt(3)}>
+                                    <Left>
+                                        <Text>{dic.other[iLang]}</Text>
+                                    </Left>
+                                    <Right>
+                                        <Radio selected={whatsappOpt === 3 ? true : false} />
+                                    </Right>
+                                </ListItem>
+
+
+
+                                {/* Telefono WhatsApp */}
+                                {
+                                    whatsappOpt === 3 ? (
+                                        <Item floatingLabel underline={false} style={styles.itemForm} >
+                                            <Label style={styles.label}>WhatsApp</Label>
+                                            <Input
+                                                placeholder='WhatsApp'
+                                                placeholderTextColor={color.grad[4]}
+                                                style={styles.input}
+                                                keyboardType='numeric'
+                                                secureTextEntry={false}
+                                                onChangeText={text => setWhatsapp(text.toLocaleLowerCase())}
+                                                value={whatsapp}
+                                            />
+                                        </Item>
+                                    ) : (<></>)
+                                }
+                            </View>
+
                             {/* Es mujer? */}
-                            <ListItem icon style={{marginVertical: 20}}>
+                            <ListItem icon style={{ marginVertical: 20 }}>
                                 <Left>
                                     <Button style={{ backgroundColor: color.grad[8] }}>
                                         <IconNB active name="ios-woman" type="Ionicons" />
@@ -190,8 +282,8 @@ const createCustomer = () => {
                             </ListItem>
 
                             {/* Descripción */}
-                            <View style={{marginVertical: 20}}>
-                                <Label style={[styles.label, { marginBottom: 10}]}>{dic.description[iLang]}{" "}
+                            <View style={{ marginVertical: 20 }}>
+                                <Label style={[styles.label, { marginBottom: 10 }]}>{dic.description[iLang]}{" "}
                                     <Text style={{ color: color.grad[3] }}>{dic.optional[iLang]}</Text>
                                 </Label>
                                 <Textarea rowSpan={5} bordered placeholder={dic.descriptionPlace[iLang]}
