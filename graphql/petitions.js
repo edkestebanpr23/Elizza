@@ -28,6 +28,7 @@ const petitions = {
       getClients {
         name
         telephone
+        telephone2
         description
         sex
         active

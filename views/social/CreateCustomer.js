@@ -11,7 +11,7 @@ import { useNavigation } from "@react-navigation/native";
 
 // Apollo
 import { useMutation } from "@apollo/client";
-import { CREATE_CUSTOMER } from "../../graphql/petitions";
+import { CREATE_CUSTOMER, GET_CUSTOMERS } from "../../graphql/petitions";
 
 // import UploadImage from "../../components/UploadImage";
 
@@ -34,7 +34,20 @@ const createCustomer = () => {
     // const { firebase } = useContext(FirebaseContext);
 
     // Apollo Mutation
-    const [createClient] = useMutation(CREATE_CUSTOMER);
+    const [createClient] = useMutation(CREATE_CUSTOMER, {
+        update(cache, { data: { createClient } }) {
+            try {
+                const { getClients } = cache.readQuery({ query: GET_CUSTOMERS });
+                console.log("1", getClients);
+                cache.writeQuery({
+                    query: GET_CUSTOMERS,
+                    data: { getClients: getClients.concat([createClient]) }
+                })
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    });
 
     // const { iLang } = route.params;
 

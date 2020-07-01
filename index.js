@@ -14,7 +14,7 @@ import { ApolloProvider } from "@apollo/client";
 import GlobalState from "./context/global/globalState";
 // import FirebaseState from "./context/firebase/firebaseState";
 
-const chorusApp = () => {
+const ElizzaApp = () => {
 
     return (
         <ApolloProvider client={client}>
@@ -28,4 +28,4 @@ const chorusApp = () => {
 };
 
 
-AppRegistry.registerComponent(appName, () => chorusApp);
+AppRegistry.registerComponent(appName, () => ElizzaApp);

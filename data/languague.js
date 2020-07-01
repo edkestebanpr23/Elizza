@@ -55,13 +55,15 @@ const language = {
         titleAdmin: ['Roles y clientes', 'Roles & Clients'],
         createClient: ['Creando cliente', 'Creating customer'],
         createUser: ['Creando usuario', 'Creating user'],
-        
+        back: ['Atrás', 'Back'],
+        customer: ['Cliente', 'Customer']
     },
     socialView: {
         addCustomer: ['Crear cliente', 'Add new customer'],
         addWorker: ['Crear usuario', 'Create user'],
         createClient: ['Creando cliente', 'Creating customer'],
-        createUser: ['Creando usuario', 'Creating user']
+        createUser: ['Creando usuario', 'Creating user'],
+        functions: ['Funciones', 'Actions']
     },
     createClientView: {
         title: ['Registro', 'Sing Up'],
@@ -78,6 +80,9 @@ const language = {
         woman: ['Mujer', 'Woman'],
         description: ['Notas/Descripción', 'Description/Notes'],
         descriptionPlace: ['Añade una descripción del cliente', 'Add a customer description'],
+    },
+    customerView: {
+        telephone: ['Teléfono', 'Telephone']
     }
 
 };

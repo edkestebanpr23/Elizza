@@ -1,5 +1,6 @@
-import React, { useContext } from 'react';
-import { Container, Header, Content, Button, ListItem, Text, Icon, Left, Body, Right, Switch } from 'native-base';
+import React, { useContext, useState } from 'react';
+import { Keyboard } from 'react-native';
+import { Container, Header, Content, Button, ListItem, Text, Icon, Left, Body, Right, Switch, Header as SearchBar, Item, Input } from 'native-base';
 import { socialView as dic } from "../../data/languague";
 import GlobalContext from "../../context/global/globalContext";
 import { useNavigation } from "@react-navigation/native";
@@ -8,42 +9,62 @@ import ListClients from "../../components/ListClients";
 
 
 const Social = () => {
-    const { iLang, user } = useContext(GlobalContext);
-    const navigation = useNavigation();
-
-    return (
-        <Container>
-        <Content>
-
-            {
-                (user.rol === 'admin') && (
-                <ListItem icon onPress={() => navigation.navigate('createUser')}>
-                    <Left style={{paddingHorizontal: 10}}>
-                        <Icon active name="user-tie" type="FontAwesome5" style={{color: color.dark }} />
-                    </Left>
-                    <Body>
-                    <Text>{dic.addWorker[iLang]}</Text>
-                    </Body>
-                </ListItem>
-                )
-            }
-          
-
-          <ListItem icon onPress={() => navigation.navigate('createCustomer')}>
-            <Left style={{ paddingHorizontal: 10 }}>
-                <Icon active name="user-plus" type="FontAwesome5" style={{color: color.dark }} />
-            </Left>
-            <Body>
-              <Text>{dic.addCustomer[iLang]}</Text>
-            </Body>
-          </ListItem>
-
-            <ListClients />
+  const [isSearch, SetIsSearch] = useState(false);
+  const { iLang, user } = useContext(GlobalContext);
+  const navigation = useNavigation();
 
 
-        </Content>
-      </Container>
-    );
+  const dismissKeyboard = () => {
+    Keyboard.dismiss();
+  };
+
+  return (
+    <Container>
+      <SearchBar searchBar rounded style={{ backgroundColor: color.grad[9], }}>
+        <Item style={{ backgroundColor: color.light }} >
+          <Icon name="ios-search" onPress={() => console.log(1)} style={{ color: color.dark }} />
+          <Input placeholder="Search" />
+          <Icon name="ios-close-circle" onPress={() => dismissKeyboard()} style={{ color: color.dark }} />
+        </Item>
+        {/* <Button transparent>
+          <Text style={{color: color.light}}>Search</Text>
+        </Button> */}
+      </SearchBar>
+
+      <Content>
+        <ListItem itemDivider>
+          <Text>{dic.functions[iLang]}</Text>
+        </ListItem>
+
+        {
+          (user.rol === 'admin') && (
+            <ListItem icon onPress={() => navigation.navigate('createUser')}>
+              <Left style={{ paddingHorizontal: 10 }}>
+                <Icon active name="user-tie" type="FontAwesome5" style={{ color: color.dark }} />
+              </Left>
+              <Body>
+                <Text>{dic.addWorker[iLang]}</Text>
+              </Body>
+            </ListItem>
+          )
+        }
+
+
+        <ListItem icon onPress={() => navigation.navigate('createCustomer')}>
+          <Left style={{ paddingHorizontal: 10 }}>
+            <Icon active name="user-plus" type="FontAwesome5" style={{ color: color.dark }} />
+          </Left>
+          <Body>
+            <Text>{dic.addCustomer[iLang]}</Text>
+          </Body>
+        </ListItem>
+
+        <ListClients iLang={iLang} />
+
+
+      </Content>
+    </Container>
+  );
 }
 
 export default Social;
