@@ -1,159 +1,70 @@
-import React, { useReducer, useEffect } from "react";
-import GlobalReducer from "./globalReducer";
-import GlobalContext from "./globalContext";
-import { SESSION, GET_USER, SET_USER, ILANG } from "../types";
-import { getToken } from "../../database/storage";
-import Storage from "../../database/storage";
+import React, { useReducer } from "react";
+import SaleReducer from "./saleReducer";
+import SaleContext from "./saleContext";
+import { ADD_PRODUCT } from "../types";
 
-const SaleContext = props => {
+const SaleState = props => {
 
     // Creando un state inicial
     const initialState = {
-        session: false,
-        user: {},
-        iLang: 0
+        products: []
     };
-
-    useEffect(() => {
-        const startVariables = async () => {
-            await getSession();
-            await getUser();
-        };
-        startVariables();
-    }, []);
 
     // useReducer con dispatch para ejecutar las funciones
-    const [state, dispatch] = useReducer(GlobalReducer, initialState);
+    const [state, dispatch] = useReducer(SaleReducer, initialState);
 
-    /**
-     * Sesiones
-     */
-    const sessionTrue = () => {
+    
+
+    const addProduct = product => {
         dispatch({
-            type: SESSION,
-            payload: true
-        });
-    };
+            type: ADD_PRODUCT,
+            payload: product
+        })
+    }
 
-    const sessionFalse = () => {
+    const deleteProduct = (product, i) => {
         dispatch({
-            type: SESSION,
-            payload: false,
-            user: {}
-        });
-    };
+            type: ADD_PRODUCT,
+            payload: product
+        })
+    }
 
-    const getSession = async () => {
-        // Obtener token
-        const token = await Storage.getToken();
-        console.log('getToken ctx', token);
-
-        // Actualizar datos
-        if (token) {
-            sessionTrue();
-        } else {
-            console.log('Soy False');
-            sessionFalse();
-        }
-    };
-
-    const startSession = async (User) => {
-        // Almacenar token
-        const { token, ...data } = User;
-        const res = await Storage.setToken(token);
-
-        // Actualizar variables
-        if (res) {
-            sessionTrue();
-            if (data) {
-                await setUser(data);
+    const parseMoney = money => {
+        if (money) {
+            money = money.toString();
+            let aux = "";
+            let count = 0;
+            for (let i = money.length - 1; i >= 0; i--) {
+                count++;
+                if (count == 3) {
+                    aux = '.' + money[i] + aux;
+                } else if (count == 6) {
+                    if (money.length > 6) {
+                        aux = "'" + money[i] + aux;
+                    } else {
+                        aux = money[i] + aux;
+                    }
+                } else {
+                    aux = money[i] + aux;
+                }
             }
-        }
-    };
-
-    const killSession = async () => {
-        console.log('Cerrando sesion...');
-        // Eliminando token
-        await Storage.deleteStorage('user');
-        const res = await Storage.deleteToken();
-
-        // Actualizando variables
-        if (res) {
-            sessionFalse();
-            console.log('Sesión cerrada exitosamente')
-            return true;
+            return aux;
         } else {
-            return false;
+            return money;
         }
-    };
-
-    /**
-     * Datos de usuarios
-     */
-    const getUser = async () => {
-        const User = await Storage.getStorage('user');
-        if (User !== false) {
-            dispatch({
-                type: SET_USER,
-                payload: User
-            });
-        }
-        // ¿¿¿¿¿    ¿Qué pasa si tiene token pero no tiene los datos de usuario?
-    };
-
-    const setUser = async (data) => {
-        if (!data) return;
-        const isUser = await Storage.setStorage('user', data);
-        dispatch({
-            type: SET_USER,
-            payload: data
-        });
-        return isUser;
-    };
-
-    /**
-     * Idioma
-     */
-
-    const getILang = async () => {
-        const ILang = await Storage.getStorage('iLang', false);
-        ILang = ILang ? parseInt(ILang) : 0;
-        dispatch({
-            type: ILANG,
-            payload: ILang
-        });
-        return ILang;
-    };
-
-    const setILang = async (i) => {
-        console.log('Cambiando a idioma: ', i);
-        const ILang = await Storage.setStorage('iLang', i);
-        if (ILang) {
-            console.log('Cambiando a idioma:: ', i);
-            dispatch({
-                type: ILANG,
-                payload: i
-            });
-        }
-    };
+    }
 
     return (
-        <GlobalContext.Provider
+        <SaleContext.Provider
             value={{
-                session: state.session,
-                user: state.user,
-                iLang: state.iLang,
-                getSession,
-                startSession,
-                killSession,
-                getUser,
-                setUser,
-                setILang,
+                products: state.products,
+                addProduct,
+                parseMoney
             }}
         >
             {props.children}
-        </GlobalContext.Provider>
+        </SaleContext.Provider>
     );
 };
 
-export default SaleContext;
+export default SaleState;

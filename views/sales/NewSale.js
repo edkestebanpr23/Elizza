@@ -5,6 +5,7 @@ import gS from "../../styles/globalStyles";
 import { main as color } from "../../data/colors";
 import { newSale as dic } from "../../data/languague";
 import GlobalContext from "../../context/global/globalContext";
+import SaleContext from "../../context/sale/saleContext";
 import { useNavigation } from "@react-navigation/native";
 
 
@@ -16,7 +17,8 @@ import ModalCategory from "../../components/ModalCategory";
 
 
 const NewSale = ({ route }) => {
-    const { iLang, user, products } = useContext(GlobalContext);
+    const { iLang, user,  } = useContext(GlobalContext);
+    const { products, parseMoney } = useContext(SaleContext);
 
     const [_message, setMessage] = useState(null);
 
@@ -51,6 +53,7 @@ const NewSale = ({ route }) => {
         }
     };
 
+    // Muestra las acciones disponibles de un producto en carrito de compras
     const productOption = (product, index) => {
         const buttons = [
             { text: dic.edit[iLang] },
@@ -75,6 +78,19 @@ const NewSale = ({ route }) => {
 
         );
     };
+
+    // Retorna el subtotal de la compra
+    const getTotal = () => {
+        let total = 0;
+        if (products) {
+            products.forEach(product => {
+                total = total + parseInt(product.cost) * parseInt(product.quantity);
+            });
+        }
+        return total;
+    };
+
+
 
     return (
         <Container style={[gS.container]}>
@@ -123,13 +139,13 @@ const NewSale = ({ route }) => {
                                         </View>
                                         <View style={{ flex: 1, flexDirection: 'row' }}>
                                             <View style={{ flexBasis: '33%' }}>
-                                                <Text style={styles.productInfo}>{product.cost}</Text>
+                                                <Text style={styles.productInfo}>{ parseMoney(product.cost) }</Text>
                                             </View>
                                             <View style={{ flexBasis: '33%' }}>
                                                 <Text style={styles.productInfo}>{product.quantity}</Text>
                                             </View>
                                             <View style={{ flexBasis: '33%' }}>
-                                                <Text style={styles.productInfo}>${product.cost * product.quantity}</Text>
+                                                <Text style={styles.productInfo}>${parseMoney(product.cost * product.quantity)}</Text>
                                             </View>
                                         </View>
                                     </View>
@@ -138,6 +154,10 @@ const NewSale = ({ route }) => {
                             ))
                         )
                     }
+
+                    <View style={{marginTop: 30, marginBottom: 100, alignItems: 'flex-end', marginRight: 20}}>
+                        <Text style={{fontSize: 30, fontWeight: 'bold', color: color.dark }}>Total: $ {parseMoney(getTotal())} </Text>
+                    </View>
 
                     {
                         _message && showAlert()

@@ -12,6 +12,7 @@ import { ApolloProvider } from "@apollo/client";
 
 // Context
 import GlobalState from "./context/global/globalState";
+import SaleState from "./context/sale/saleState";
 // import FirebaseState from "./context/firebase/firebaseState";
 
 const ElizzaApp = () => {
@@ -19,9 +20,11 @@ const ElizzaApp = () => {
     return (
         <ApolloProvider client={client}>
             {/* <FirebaseState> */}
-                <GlobalState>
+            <GlobalState>
+                <SaleState>
                     <App />
-                </GlobalState>
+                </SaleState>
+            </GlobalState>
             {/* </FirebaseState> */}
         </ApolloProvider>
     )

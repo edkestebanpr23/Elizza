@@ -2,13 +2,15 @@ import React, { useState, useEffect, useContext } from "react";
 import { Alert, Modal, StyleSheet, Text, TouchableHighlight, View } from "react-native";
 import { Container, Content, Form, Item, Input, Label, Icon, Button } from "native-base";
 import GlobalContext from "../../context/global/globalContext";
+import SaleContext from "../../context/sale/saleContext";
 import categories from "../../data/categories";
 import { formProductCmp as dic } from "../../data/languague";
 import { main as color } from "../../data/colors";
 import { useNavigation } from "@react-navigation/native";
 
 const FormProduct = () => {
-    const { iLang, addProduct } = useContext(GlobalContext);
+    const { iLang } = useContext(GlobalContext);
+    const { addProduct, parseMoney } = useContext(SaleContext);
     const navigation = useNavigation();
 
     const [modalVisible, setModalVisible] = useState(false);
@@ -17,7 +19,7 @@ const FormProduct = () => {
     const [quantity, setQuantity] = useState(1);
 
     useEffect(() => {
-        addDefault();
+        // addDefault();
     }, []);
 
     const minus = () => {
@@ -38,7 +40,7 @@ const FormProduct = () => {
         addProduct({ product: 'Chaqueta niña', cost: 30000, quantity: 1, woman: true, category: 'Mujer - Sacos, Blazer' });
         addProduct({ product: 'Falda Jean', cost: 65000, quantity: 2, woman: true, category: 'Mujer - Faldas, Vestidos'  });
         addProduct({ product: 'Pantalón niño', cost: 45000, quantity: 1, woman: false, category: 'Niño - Pantalón, Pantaloneta'  });
-        addProduct({ product: 'Medias', cost: 15, quantity: 3, category: 'Medias' });
+        addProduct({ product: 'Medias', cost: 15000, quantity: 3, category: 'Medias' });
     };
 
     return (
