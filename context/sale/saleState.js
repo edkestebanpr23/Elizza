@@ -1,18 +1,17 @@
 import React, { useReducer, useEffect } from "react";
 import GlobalReducer from "./globalReducer";
 import GlobalContext from "./globalContext";
-import { SESSION, GET_USER, SET_USER, ILANG, ADD_PRODUCT } from "../types";
+import { SESSION, GET_USER, SET_USER, ILANG } from "../types";
 import { getToken } from "../../database/storage";
 import Storage from "../../database/storage";
 
-const GlobalState = props => {
+const SaleContext = props => {
 
     // Creando un state inicial
     const initialState = {
         session: false,
         user: {},
-        iLang: 0,
-        products: []
+        iLang: 0
     };
 
     useEffect(() => {
@@ -138,27 +137,18 @@ const GlobalState = props => {
         }
     };
 
-    const addProduct = product => {
-        dispatch({
-            type: ADD_PRODUCT,
-            payload: product
-        })
-    }
-
     return (
         <GlobalContext.Provider
             value={{
                 session: state.session,
                 user: state.user,
                 iLang: state.iLang,
-                products: state.products,
                 getSession,
                 startSession,
                 killSession,
                 getUser,
                 setUser,
                 setILang,
-                addProduct
             }}
         >
             {props.children}
@@ -166,4 +156,4 @@ const GlobalState = props => {
     );
 };
 
-export default GlobalState;
+export default SaleContext;

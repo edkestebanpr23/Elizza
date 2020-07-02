@@ -12,6 +12,7 @@ import { tabs as dic } from "../data/languague";
 // Stack Main Views
 import Home from "./home/Home";
 import HomeStack from "./home/HomeStack";
+import SalesStack from "./sales/SalesStack";
 import SocialStack from "./social/SocialStack";
 import ProfileStack from "./profile/ProfileStack";
 import Profile from "./profile/Profile";
@@ -39,8 +40,8 @@ const Tabs = () => {
                 >
 
                     <Tab.Screen
-                        name='Home'
-                        component={HomeStack}
+                        name='Sales'
+                        component={SalesStack}
                         options={{
                             tabBarIcon: () => <Icon name="shopping-cart" color={colors.main.grad[1]} size={24} />,
                             title: dic.sales[iLang]

@@ -64,7 +64,8 @@ const language = {
         addWorker: ['Crear usuario', 'Create user'],
         createClient: ['Creando cliente', 'Creating customer'],
         createUser: ['Creando usuario', 'Creating user'],
-        functions: ['Funciones', 'Actions']
+        functions: ['Funciones', 'Actions'],
+        searchCli: ['Buscar cliente', 'Search customer']
     },
     createClientView: {
         title: ['Registro', 'Sing Up'],
@@ -101,8 +102,41 @@ const language = {
         closeSession: ['Cerrar Sesión', 'Sign Out'],
         selectLang: ['Selecciona idioma', 'Select language'],
         cancel: ['Cancelar', 'Cancel'],
+    },
+    // Sales
+    salesStack: {
+        customer: ['Cliente', 'Customer'],
+        sales: ['Ventas y Facturas', 'Sales'],
+        back: ['Atrás', 'Back'],
+        newSale: ['Nueva Venta', 'New Sale'],
+        newProduct: ['Registro de producto', 'Product registration']
+    },
+    salesView: {
+        addCustomer: ['Crear cliente', 'Add new customer'],
+        addWorker: ['Crear usuario', 'Create user'],
+        createClient: ['Creando cliente', 'Creating customer'],
+        createUser: ['Creando usuario', 'Creating user'],
+        functions: ['Funciones', 'Actions'],
+        search: ['Buscar', 'Search']
+    },
+    newSale: {
+        noProducts: ['Sin productos', 'No products'],
+        edit: ['Editar', 'Edit'],
+        delete: ['Eliminar', 'Delete'],
+        selectOpt: ['Selecciona una acción', 'Select action'],
+        cancel: ['Cancelar', 'Cancel'],
+        cost: ['Valor', 'Cost'],
+        quantity: ['Cantidad', 'Quantity'],
+        total: ['Total', 'Total']
+    },
+    formProductCmp: {
+        product: ['Nombre producto', 'Product name'],
+        category: ['Categoría', 'Category'],
+        woman: ['Mujer', 'Woman'],
+        cost: ['Precio', 'Cost'],
+        quantity: ['Cantidad', 'Quantity'],
+        add: ['Añadir', 'Add']
     }
-
 };
 
 module.exports = language;

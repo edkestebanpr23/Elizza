@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { StyleSheet, View, Keyboard, TouchableWithoutFeedback, ScrollView, Image } from 'react-native';
-import { Container, Form, Input, Button, Item, Label, Text, H1, Toast, ListItem, Left, Icon as IconNB, Body, Right, Switch, Textarea, Radio } from "native-base";
-import Icon from "react-native-vector-icons/AntDesign";
+import { Container, Form, Input, Button, Item, Label, Text, H1, Toast, ListItem, Left, Icon, Body, Right, Switch, Textarea, Radio } from "native-base";
 import gS from "../../styles/globalStyles";
 import { main as color } from "../../data/colors";
 import { createClientView as dic } from "../../data/languague";
@@ -13,12 +12,8 @@ import { useNavigation } from "@react-navigation/native";
 import { useMutation } from "@apollo/client";
 import { CREATE_CUSTOMER, GET_CUSTOMERS } from "../../graphql/petitions";
 
-// import UploadImage from "../../components/UploadImage";
-
-
 const createCustomer = () => {
-    const { iLang, user } = useContext(GlobalContext);
-    console.log(user);
+    const { iLang } = useContext(GlobalContext);
 
     const [name, setName] = useState('');
     const [telephone, setTelephone] = useState('');
@@ -33,8 +28,6 @@ const createCustomer = () => {
 
     // React Navigation
     const navigation = useNavigation();
-    // Firebase Context
-    // const { firebase } = useContext(FirebaseContext);
 
     // Apollo Mutation
     const [createClient] = useMutation(CREATE_CUSTOMER, {
@@ -112,7 +105,6 @@ const createCustomer = () => {
                         sex: woman ? 'female' : 'male',
                         description: description,
                         whatsapp: _whatsapp
-                        // worker: '5ef26266ed48391faaa959e1'
                     }
                 }
             });
@@ -127,7 +119,7 @@ const createCustomer = () => {
 
         } catch (error) {
             // setMessage(null);
-            console.log('Error::', error);
+            console.log('Error:', error);
             if (error.message == 'GraphQL error: exist') {
                 setMessage(dic.errorExist[iLang]);
             } else {
@@ -197,7 +189,7 @@ const createCustomer = () => {
                                 <ListItem icon>
                                     <Left>
                                         <Button style={{ backgroundColor: "#49c65c" }}>
-                                            <IconNB active name="whatsapp" type='FontAwesome5' />
+                                            <Icon active name="whatsapp" type='FontAwesome5' />
                                         </Button>
                                     </Left>
                                     <Body>
@@ -270,7 +262,7 @@ const createCustomer = () => {
                             <ListItem icon style={{ marginVertical: 20 }}>
                                 <Left>
                                     <Button style={{ backgroundColor: color.grad[8] }}>
-                                        <IconNB active name="ios-woman" type="Ionicons" />
+                                        <Icon active name="ios-woman" type="Ionicons" />
                                     </Button>
                                 </Left>
                                 <Body>

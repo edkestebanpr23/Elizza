@@ -23,7 +23,7 @@ const Social = () => {
       <SearchBar searchBar rounded style={{ backgroundColor: color.grad[9], }}>
         <Item style={{ backgroundColor: color.light }} >
           <Icon name="ios-search" onPress={() => console.log(1)} style={{ color: color.dark }} />
-          <Input placeholder="Search" />
+          <Input placeholder={dic.searchCli[iLang]} />
           <Icon name="ios-close-circle" onPress={() => dismissKeyboard()} style={{ color: color.dark }} />
         </Item>
         {/* <Button transparent>

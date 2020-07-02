@@ -1,4 +1,4 @@
-import { SESSION, SET_USER, GET_USER, ILANG } from "../types";
+import { SESSION, SET_USER, GET_USER, ILANG, ADD_PRODUCT } from "../types";
 
 export default (state, action) => {
     switch (action.type) {
@@ -17,6 +17,11 @@ export default (state, action) => {
                 ...state,
                 user: action.payload
             };
+        case ADD_PRODUCT:
+            return {
+                ...state,
+                products: [...state.products, action.payload]
+            }
         default:
             return state;
     }

@@ -1,7 +1,6 @@
 import React, { useState, useContext } from 'react';
-import { StyleSheet, View, Keyboard, TouchableWithoutFeedback, ScrollView, Image } from 'react-native';
-import { Container, Form, Input, Button, Item, Label, Text, H1, Toast, ListItem, Left, Icon as IconNB, Body, Right, Switch } from "native-base";
-import Icon from "react-native-vector-icons/AntDesign";
+import { StyleSheet, View, Keyboard, TouchableWithoutFeedback, ScrollView } from 'react-native';
+import { Container, Form, Input, Button, Item, Label, Text, H1, Toast, ListItem, Left, Icon, Body, Right, Switch } from "native-base";
 import gS from "../../styles/globalStyles";
 import { main as color } from "../../data/colors";
 import { singupView as dic } from "../../data/languague";
@@ -180,7 +179,7 @@ const createWorker = ({ route }) => {
                             <ListItem icon style={{marginVertical: 20}}>
                                 <Left>
                                     <Button style={{ backgroundColor: color.grad[8] }}>
-                                        <IconNB active name="laptop-code" type="FontAwesome5" />
+                                        <Icon active name="laptop-code" type="FontAwesome5" />
                                     </Button>
                                 </Left>
                                 <Body>
