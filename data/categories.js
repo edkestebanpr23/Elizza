@@ -1,9 +1,12 @@
 const categories = [
     {
+        name: false
+    },
+    {
         name: 'Hombre',
         sub: [
             {
-                name: 'Pantalon, Panteloneta'
+                name: 'Pantalón, Panteloneta'
             },
             {
                 name: 'Camisa, Camiseta'
@@ -37,7 +40,7 @@ const categories = [
         name: 'Niño',
         sub: [
             {
-                name: 'Pantalon, Panteloneta'
+                name: 'Pantalón, Panteloneta'
             },
             {
                 name: 'Camisa, Camiseta'

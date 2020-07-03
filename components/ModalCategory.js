@@ -1,10 +1,14 @@
 import React, { Component, useState } from "react";
-import { Alert, Modal, StyleSheet, Text, TouchableHighlight, View } from "react-native";
-import {  } from "native-base";
+import { Alert, Modal, StyleSheet, TouchableHighlight, View } from "react-native";
+import { List, ListItem, Text, Left, Right, Icon } from "native-base";
 import categories from "../data/categories";
 
-const ModalCategory = ({ modalVisible, setModalVisible }) => {
-    console.log(categories);
+const ModalCategory = ({ modalVisible, setModalVisible, onSelectCategory, color }) => {
+  const [mainCategory, setMainCategory] = useState(false);
+  const selectedCategory = (type, sub) => {
+    onSelectCategory(type, sub);
+  };
+
   return (
     <View style={styles.centeredView}>
       <Modal
@@ -17,15 +21,33 @@ const ModalCategory = ({ modalVisible, setModalVisible }) => {
       >
         <View style={styles.centeredView}>
           <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hello World!</Text>
+            {
+              !mainCategory && categories.map((category, i) => (
+                <View key={category.name} style={styles.item}>
+                  <Text onPress={() => setMainCategory(i)} >{category.name}</Text>
+                </View>
+              ))
+            }
+            {
+              mainCategory && (
+                <View style={styles.item}>
+                  <Text style={{ fontWeight: 'bold' }} onPress={() => setMainCategory(false)}>{"< "}{categories[mainCategory].name}</Text>
+                </View>
+              )
+            }
+            {
+              mainCategory && categories[mainCategory]['sub'].map((category, i) => (
+                <View key={category.name} style={styles.item}>
+                  <Text onPress={() => selectedCategory(categories[mainCategory]['name'], category.name)} >{category.name}</Text>
+                </View>
+              ))
+            }
 
             <TouchableHighlight
-              style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
-              onPress={() => {
-                setModalVisible(!modalVisible);
-              }}
+              style={{ ...styles.openButton, backgroundColor: color.dark, marginTop: 20 }}
+              onPress={() => setModalVisible(!modalVisible)}
             >
-              <Text style={styles.textStyle}>Hide Modal</Text>
+              <Icon name='circledowno' type='AntDesign' style={styles.textStyle} />
             </TouchableHighlight>
           </View>
         </View>
@@ -70,6 +92,9 @@ const styles = StyleSheet.create({
   modalText: {
     marginBottom: 15,
     textAlign: "center"
+  },
+  item: {
+    marginVertical: 10
   }
 });
 
