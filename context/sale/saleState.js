@@ -22,7 +22,7 @@ const SaleState = props => {
         })
     }
 
-    const deleteProduct = product => {
+    const deleteProduct = (product) => {
         dispatch({
             type: DELETE_PRODUCT,
             payload: product
@@ -37,6 +37,13 @@ const SaleState = props => {
             payload: _products
         })
     };
+
+    const emptyCart = () => {
+        dispatch({
+            type: UPDATE_PRODUCT,
+            payload: []
+        })
+    }
 
     const parseMoney = money => {
         if (money) {
@@ -70,7 +77,8 @@ const SaleState = props => {
                 addProduct,
                 parseMoney,
                 deleteProduct,
-                editProduct
+                editProduct,
+                emptyCart
             }}
         >
             {props.children}

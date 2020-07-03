@@ -109,7 +109,11 @@ const language = {
         sales: ['Ventas y Facturas', 'Sales'],
         back: ['Atrás', 'Back'],
         newSale: ['Nueva Venta', 'New Sale'],
-        newProduct: ['Registro de producto', 'Product registration']
+        newProduct: ['Registro de producto', 'Product registration'],
+        emptyCart: ['Vaciar Carrito', 'Empty Cart'],
+        message: ['¿Estás seguro que deseas vacial el carrito de compras?', 'Are you sure you want to empty the shopping cart?'],
+        ok: ['Sí', 'Ok'],
+        cancel: ['Cancelar', 'Cancel']
     },
     salesView: {
         addCustomer: ['Crear cliente', 'Add new customer'],

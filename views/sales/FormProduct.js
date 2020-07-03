@@ -1,18 +1,16 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Alert, Modal, StyleSheet, Text, TouchableHighlight, View, TouchableWithoutFeedback } from "react-native";
+import { StyleSheet, Text, View, TouchableWithoutFeedback } from "react-native";
 import { Container, Content, Form, Item, Input, Label, Icon, Button } from "native-base";
 import GlobalContext from "../../context/global/globalContext";
 import SaleContext from "../../context/sale/saleContext";
-import categories from "../../data/categories";
 import { formProductCmp as dic } from "../../data/languague";
 import { main as color } from "../../data/colors";
 import { useNavigation } from "@react-navigation/native";
 import ModalCategory from "../../components/ModalCategory";
-import { cos } from "react-native-reanimated";
 
 const FormProduct = ({ route }) => {
     const { iLang } = useContext(GlobalContext);
-    const { addProduct, editProduct } = useContext(SaleContext);
+    const { addProduct, editProduct, products } = useContext(SaleContext);
     const navigation = useNavigation();
     // Se reutiliza el formulario de registro de producto para editar
     const { editing, lastProduct, index } = route.params || false;
@@ -25,7 +23,6 @@ const FormProduct = ({ route }) => {
 
 
     useEffect(() => {
-        // addDefault();
         if (editing) {
             setProduct(lastProduct.product);
             setCost(lastProduct.cost);
@@ -34,11 +31,20 @@ const FormProduct = ({ route }) => {
         }
     }, []);
 
-    // Resta uno a la cantidad
+    // Resta uno a la cantidad del producto
     const minus = () => {
         if (parseInt(quantity) > 1) {
             setQuantity(parseInt(quantity) - 1);
         }
+    };
+
+    // Verifica que el producto no sea repetido en la misma factura
+    const compareProductName = () => {
+        let exist = false;
+        products.forEach(element => {
+            if (element.product === product) { exist = true };
+        });
+        return exist;
     };
 
     // Añadir producto o editar, no es sumar cantidad...
@@ -48,6 +54,14 @@ const FormProduct = ({ route }) => {
             return;
         } else if (parseInt(cost) <= 0) {
             alert('Precio no válido');
+            return;
+        }
+        if (compareProductName()) {
+            alert('Ya existe un producto en esta factura con este nombre.\n\nIntenta con otro nombre. ');
+            return;
+        }
+        if (product.length <= 3) {
+            alert('Nombre demasiado corto');
             return;
         }
         if (!editing) {
@@ -60,14 +74,7 @@ const FormProduct = ({ route }) => {
         navigation.goBack();
     };
 
-
-    const addDefault = () => {
-        addProduct({ product: 'Chaqueta niña', cost: 30000, quantity: 1, woman: true, category: 'Mujer - Sacos, Blazer' });
-        addProduct({ product: 'Falda Jean', cost: 65000, quantity: 2, woman: true, category: 'Mujer - Faldas, Vestidos' });
-        addProduct({ product: 'Pantalón niño', cost: 45000, quantity: 1, woman: false, category: 'Niño - Pantalón, Pantaloneta' });
-        addProduct({ product: 'Medias', cost: 15000, quantity: 3, category: 'Medias' });
-    };
-
+    // Al seleccionar una categoria, esta se almacena en el padre que se recibe por props
     const onSelectCategory = (type, sub) => {
         setCategory(type + ' - ' + sub);
         console.log('Categoria seleccionada:', category);
@@ -132,31 +139,6 @@ const FormProduct = ({ route }) => {
                     color={color}
                 />
             </Content>
-            {/* <View style={styles.centeredView}>
-                <Modal
-                    animationType="slide"
-                    transparent={true}
-                    visible={modalVisible}
-                    onRequestClose={() => {
-                        Alert.alert("Modal has been closed.");
-                    }}
-                >
-                    <View style={styles.centeredView}>
-                        <View style={styles.modalView}>
-                            <Text style={styles.modalText}>Hello World!</Text>
-
-                            <TouchableHighlight
-                                style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
-                                onPress={() => {
-                                    setModalVisible(!modalVisible);
-                                }}
-                            >
-                                <Text style={styles.textStyle}>Hide Modal</Text>
-                            </TouchableHighlight>
-                        </View>
-                    </View>
-                </Modal>
-            </View> */}
         </Container>
     );
 };

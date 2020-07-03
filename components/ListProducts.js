@@ -7,10 +7,15 @@ import GlobalContext from "../context/global/globalContext";
 import SaleContext from "../context/sale/saleContext";
 import { useNavigation } from "@react-navigation/native";
 
-const ListProducts = ({ route }) => {
-    const { iLang, user, } = useContext(GlobalContext);
+/**
+ * Las props que recibe son... 
+ * edit: Permite editar los productos
+ * total: Muestra el total de los productos
+ */
+const ListProducts = (props) => {
+    const { iLang } = useContext(GlobalContext);
     const { products, parseMoney, deleteProduct } = useContext(SaleContext);
-
+    const { edit, total } = props || false;
     const [_message, setMessage] = useState(null);
 
     // React Navigation
@@ -21,11 +26,6 @@ const ListProducts = ({ route }) => {
     /**
      * Functions
      */
-
-    //  Cerrar teclado al oprimir la pantalla cuando el teclado esté abierto
-    const dismissKeyboard = () => {
-        Keyboard.dismiss();
-    };
 
     const showAlert = () => {
         try {
@@ -63,7 +63,7 @@ const ListProducts = ({ route }) => {
                 if (buttonIndex == 0) {
                     navigation.navigate('FormProduct', { editing: true, lastProduct: product, index })
                 } else if (buttonIndex == 1) {
-                    deleteProduct(product);
+                    deleteProduct(product, index);
                 }
             }
 
@@ -104,12 +104,16 @@ const ListProducts = ({ route }) => {
                                     <View style={{ flexBasis: '80%' }}>
                                         <Text style={styles.productName}>{product.product}</Text>
                                     </View>
-                                    <View style={{ flexBasis: '20%', alignItems: 'flex-end' }}>
-                                        <Icon name='options-vertical' type='SimpleLineIcons'
-                                            onPress={() => productOption(product, i)}
-                                            style={{ fontSize: 18, marginTop: 5 }}
-                                        />
-                                    </View>
+                                    {
+                                        edit && (
+                                            <View style={{ flexBasis: '20%', alignItems: 'flex-end' }}>
+                                                <Icon name='options-vertical' type='SimpleLineIcons'
+                                                    onPress={() => productOption(product, i)}
+                                                    style={{ fontSize: 18, marginTop: 5 }}
+                                                />
+                                            </View>
+                                        )
+                                    }
                                 </View>
 
                                 <Text style={styles.productCategory}>{product.category}</Text>
@@ -143,9 +147,13 @@ const ListProducts = ({ route }) => {
                 )
             }
 
-            <View style={{ marginTop: 30, marginBottom: 100, alignItems: 'flex-end', marginRight: 20 }}>
-                <Text style={{ fontSize: 30, fontWeight: 'bold', color: color.dark }}>Total: $ {parseMoney(getTotal())} </Text>
-            </View>
+            {
+                total && (
+                    <View style={{ marginTop: 30, marginBottom: 100, alignItems: 'flex-end', marginRight: 20 }}>
+                        <Text style={{ fontSize: 30, fontWeight: 'bold', color: color.dark }}>Total: $ {parseMoney(getTotal())} </Text>
+                    </View>
+                )
+            }
 
             {
                 _message && showAlert()

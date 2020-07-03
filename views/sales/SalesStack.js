@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
-import { View } from 'react-native';
-import { Text } from "native-base";
+import { View, Alert } from 'react-native';
+import { Text, Icon } from "native-base";
 import { createStackNavigator } from "@react-navigation/stack";
 import { main as color } from "../../data/colors";
 import { salesStack as dic } from "../../data/languague";
 import GlobalContext from "../../context/global/globalContext";
+import SaleContext from "../../context/sale/saleContext";
 
 import Sales from "./Sales";
 import NewSale from "./NewSale";
@@ -16,6 +17,25 @@ const SalesStack = () => {
 
     // Global Context
     const { iLang, user } = useContext(GlobalContext);
+    const { products, emptyCart } = useContext(SaleContext);
+
+    const emptyCartConfirm = () => {
+        Alert.alert(
+            dic.emptyCart[iLang],
+            dic.message[iLang],
+            [
+                {
+                    text: dic.cancel[iLang],
+                    onPress: () => console.log('Vaciado cancelado'),
+                    style: 'cancel'
+                },
+                {
+                    text: dic.ok[iLang],
+                    onPress: () => emptyCart()
+                }
+            ]
+        )
+    }
 
     return (
         <Stack.Navigator>
@@ -29,7 +49,7 @@ const SalesStack = () => {
                     headerTintColor: color.grad[0],
                     headerStyle: {
                         backgroundColor: color.grad[9],
-                    },
+                    }
                 }}
             >
             </Stack.Screen>
@@ -45,6 +65,13 @@ const SalesStack = () => {
                         backgroundColor: color.grad[9],
                     },
                     headerBackTitle: dic.back[iLang],
+                    headerRight: () => {
+                        if (products.length > 0) {
+                            return <Icon name='cart-remove' type='MaterialCommunityIcons' style={{ color: color.light, marginRight: 10 }} onPress={emptyCartConfirm} />;
+                        } else {
+                            return;
+                        }
+                    }
                 }}
             >
             </Stack.Screen>
