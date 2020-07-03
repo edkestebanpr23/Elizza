@@ -135,7 +135,8 @@ const language = {
         woman: ['Mujer', 'Woman'],
         cost: ['Precio', 'Cost'],
         quantity: ['Cantidad', 'Quantity'],
-        add: ['Añadir', 'Add']
+        add: ['Añadir', 'Add'],
+        update: ['Actualizar', 'Update']
     }
 };
 

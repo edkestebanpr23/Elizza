@@ -18,7 +18,7 @@ import ModalCategory from "../../components/ModalCategory";
 
 const NewSale = ({ route }) => {
     const { iLang, user,  } = useContext(GlobalContext);
-    const { products, parseMoney } = useContext(SaleContext);
+    const { products, parseMoney, deleteProduct } = useContext(SaleContext);
 
     const [_message, setMessage] = useState(null);
 
@@ -70,9 +70,9 @@ const NewSale = ({ route }) => {
             },
             (buttonIndex) => {
                 if (buttonIndex == 0) {
-                    console.log('Editando...');
+                    navigation.navigate('FormProduct', { editing: true, lastProduct: product, index })
                 } else if (buttonIndex == 1) {
-                    console.log('Borrenda')
+                    deleteProduct(product);
                 }
             }
 

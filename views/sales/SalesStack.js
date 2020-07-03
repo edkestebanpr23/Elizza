@@ -16,7 +16,6 @@ const SalesStack = () => {
 
     // Global Context
     const { iLang, user } = useContext(GlobalContext);
-    console.log(user);
 
     return (
         <Stack.Navigator>

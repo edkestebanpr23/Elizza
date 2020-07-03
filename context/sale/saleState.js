@@ -1,7 +1,7 @@
 import React, { useReducer } from "react";
 import SaleReducer from "./saleReducer";
 import SaleContext from "./saleContext";
-import { ADD_PRODUCT } from "../types";
+import { ADD_PRODUCT, DELETE_PRODUCT, UPDATE_PRODUCT } from "../types";
 
 const SaleState = props => {
 
@@ -22,12 +22,21 @@ const SaleState = props => {
         })
     }
 
-    const deleteProduct = (product, i) => {
+    const deleteProduct = product => {
         dispatch({
-            type: ADD_PRODUCT,
+            type: DELETE_PRODUCT,
             payload: product
         })
     }
+
+    const editProduct = (last, product, index) => {
+        let _products = state.products;
+        _products[index] = product;
+        dispatch({
+            type: UPDATE_PRODUCT,
+            payload: _products
+        })
+    };
 
     const parseMoney = money => {
         if (money) {
@@ -59,7 +68,9 @@ const SaleState = props => {
             value={{
                 products: state.products,
                 addProduct,
-                parseMoney
+                parseMoney,
+                deleteProduct,
+                editProduct
             }}
         >
             {props.children}
