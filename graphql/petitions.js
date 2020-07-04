@@ -26,6 +26,7 @@ const petitions = {
   GET_CUSTOMERS: gql`
     query getClients {
       getClients {
+        id
         name
         telephone
         telephone2

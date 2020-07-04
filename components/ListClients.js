@@ -23,11 +23,8 @@ const ListClients = ({ iLang, searchbar = true, redirect = true, onSelectCustome
     const [customers, setCustomers] = useState(<></>);
 
     const onSelect = (cli) => {
-        if (redirect) {
-            navigation.navigate('Customer', { customer: cli, iLang });
-        } else {
-            onSelectCustomer(JSON.stringify(cli));
-        }
+        // console.log(cli);
+        onSelectCustomer(JSON.stringify(cli));
     }
 
     useEffect(() => {

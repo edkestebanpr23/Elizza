@@ -33,8 +33,10 @@ const FormInfoSale = ({ route }) => {
         setModalVisible(!isModalVisible);
     };
 
-    const onSelectCustomer = (text) => {
-        console.log(JSON.parse(text));
+    const selectCustomer = (text) => {
+        console.log('xxx', JSON.parse(text));
+        setCustomer(JSON.parse(text));
+        setModalVisible(!isModalVisible);
     };
 
     return (
@@ -42,25 +44,23 @@ const FormInfoSale = ({ route }) => {
             <Content>
                 <Form style={{ marginTop: 40 }}>
 
-                    <TouchableWithoutFeedback onPress={() => navigation.navigate('SelectCustomer')}>
+                    <TouchableWithoutFeedback onPress={toggleModal}>
                         <View style={{ marginVertical: 10, marginHorizontal: 15, backgroundColor: color.grad[0] }}>
                             <View style={{ paddingVertical: 10, paddingHorizontal: 10, flexDirection: 'row' }}>
                                 <View style={{ flexBasis: '30%', justifyContent: 'center' }}>
                                     <Text style={{ fontSize: 16 }}>{dic.customer[iLang]} {" "}</Text>
                                 </View>
                                 <View style={{ flexBasis: '70%', justifyContent: 'center' }}>
-                                    <Text style={{ fontSize: 18 }}>{customer}</Text>
+                                    <Text style={{ fontSize: 18 }}>{customer.name}</Text>
                                 </View>
                             </View>
                         </View>
                     </TouchableWithoutFeedback>
 
                     <View style={{ flex: 1, borderRadius: 50 }}>
-                        <Button title="Show modal" onPress={toggleModal} />
-
                         <Modal isVisible={isModalVisible}>
                             <View style={{ flex: 1 }}>
-                                <ListClients iLang={iLang} redirect={false} onSelectCustomer={onSelectCustomer} />
+                                <ListClients iLang={iLang} searchbar redirect={false} onSelectCustomer={selectCustomer} />
                                 <Button style={{backgroundColor: color.dark, margin: 10}} block onPress={toggleModal}>
                                     <Text style={{color: color.light, fontWeight: 'bold', fontSize: 18}}>{dic.cancel[iLang]}</Text>
                                 </Button>
