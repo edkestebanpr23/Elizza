@@ -15,7 +15,10 @@ const categories = [
                 name: 'Saco, Blazer'
             },
             {
-                name: 'Medias'
+                name: 'Interiores'
+            },
+            {
+                name: 'otro'
             }
         ]
     },
@@ -23,16 +26,19 @@ const categories = [
         name: 'Mujer',
         sub: [
             {
-                name: 'Falda'
+                name: 'Falda, Vestido'
             },
             {
-                name: 'Blusa'
+                name: 'Blusa, Top'
             },
             {
                 name: 'Saco, Gabán, Chaqueta'
             },
             {
-                name: 'Medias'
+                name: 'Interiores'
+            },
+            {
+                name: 'otro'
             }
         ]
     },
@@ -49,7 +55,10 @@ const categories = [
                 name: 'Saco, Blazer'
             },
             {
-                name: 'Medias'
+                name: 'Interiores'
+            },
+            {
+                name: 'otro'
             }
         ]
     },
@@ -57,16 +66,19 @@ const categories = [
         name: 'Niña',
         sub: [
             {
-                name: 'Falda'
+                name: 'Falda, Vestido'
             },
             {
-                name: 'Blusa'
+                name: 'Blusa, Top'
             },
             {
                 name: 'Saco, Gabán, Chaqueta'
             },
             {
-                name: 'Medias'
+                name: 'Interiores'
+            },
+            {
+                name: 'otro'
             }
         ]
     },

@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { Keyboard } from 'react-native';
-import { Container, Header, Content, Button, ListItem, Text, Icon, Left, Body, Right, Switch, Header as SearchBar, Item, Input } from 'native-base';
+import { Container, Header, Content, Button, ListItem, Text, Icon, Left, Body, Right, Switch, Header as SearchBar, Item, Input, Textarea } from 'native-base';
 import { socialView as dic } from "../../data/languague";
 import GlobalContext from "../../context/global/globalContext";
 import { useNavigation } from "@react-navigation/native";
@@ -12,24 +12,29 @@ const Social = () => {
   const [isSearch, SetIsSearch] = useState(false);
   const { iLang, user } = useContext(GlobalContext);
   const navigation = useNavigation();
+  const [customer, setCustomer] = useState(null);
 
 
   const dismissKeyboard = () => {
     Keyboard.dismiss();
   };
 
+  const onSelectCustomer = (text) => {
+    setCustomer(JSON.parse(text));
+  };
+
   return (
     <Container>
-      <SearchBar searchBar rounded style={{ backgroundColor: color.grad[9], }}>
+      {/* <SearchBar searchBar rounded style={{ backgroundColor: color.grad[9], }}>
         <Item style={{ backgroundColor: color.light }} >
           <Icon name="ios-search" onPress={() => console.log(1)} style={{ color: color.dark }} />
           <Input placeholder={dic.searchCli[iLang]} />
           <Icon name="ios-close-circle" onPress={() => dismissKeyboard()} style={{ color: color.dark }} />
         </Item>
+      </SearchBar> */}
         {/* <Button transparent>
           <Text style={{color: color.light}}>Search</Text>
         </Button> */}
-      </SearchBar>
 
       <Content>
         <ListItem itemDivider>
@@ -59,7 +64,7 @@ const Social = () => {
           </Body>
         </ListItem>
 
-        <ListClients iLang={iLang} />
+        <ListClients iLang={iLang} searchbar redirect />
 
 
       </Content>

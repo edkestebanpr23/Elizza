@@ -140,7 +140,7 @@ const Login = () => {
                                     <Label style={styles.label}>{dic.document[iLang]}</Label>
                                     <Input
                                         style={styles.input}
-                                        keyboardType='email-address'
+                                        keyboardType='numeric'
                                         onChangeText={text => setEmail(text.toLocaleLowerCase())}
                                         value={email}
                                     />

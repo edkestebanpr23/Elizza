@@ -10,6 +10,8 @@ import SaleContext from "../../context/sale/saleContext";
 import Sales from "./Sales";
 import NewSale from "./NewSale";
 import FormProduct from "./FormProduct";
+import InfoSale from "./InfoSale";
+import SelectCustomer from "./SelectCustomer";
 
 const Stack = createStackNavigator();
 
@@ -82,6 +84,36 @@ const SalesStack = () => {
                 options={{
                     headerShown: true,
                     title: dic.newProduct[iLang],
+                    headerTintColor: color.grad[0],
+                    headerStyle: {
+                        backgroundColor: color.grad[9],
+                    },
+                    headerBackTitle: dic.back[iLang],
+                }}
+            >
+            </Stack.Screen>
+
+            <Stack.Screen
+                name="InfoSale"
+                component={InfoSale}
+                options={{
+                    headerShown: true,
+                    title: dic.infoSale[iLang],
+                    headerTintColor: color.grad[0],
+                    headerStyle: {
+                        backgroundColor: color.grad[9],
+                    },
+                    headerBackTitle: dic.back[iLang],
+                }}
+            >
+            </Stack.Screen>
+
+            <Stack.Screen
+                name="SelectCustomer"
+                component={SelectCustomer}
+                options={{
+                    headerShown: true,
+                    title: dic.selectCust[iLang],
                     headerTintColor: color.grad[0],
                     headerStyle: {
                         backgroundColor: color.grad[9],

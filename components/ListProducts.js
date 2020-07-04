@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { StyleSheet, View, Keyboard } from 'react-native';
-import { Container, Text, Toast, Icon, ActionSheet } from "native-base";
+import { Container, Text, Toast, Icon, ActionSheet, Button } from "native-base";
 import { main as color } from "../data/colors";
 import { newSale as dic } from "../data/languague";
 import GlobalContext from "../context/global/globalContext";
@@ -149,9 +149,19 @@ const ListProducts = (props) => {
 
             {
                 total && (
-                    <View style={{ marginTop: 30, marginBottom: 100, alignItems: 'flex-end', marginRight: 20 }}>
+                    <View style={{ marginTop: 30, marginBottom: 50, alignItems: 'flex-end', marginRight: 20 }}>
                         <Text style={{ fontSize: 30, fontWeight: 'bold', color: color.dark }}>Total: $ {parseMoney(getTotal())} </Text>
                     </View>
+                )
+            }
+
+            {
+                products && (
+                    <Button rounded block style={{backgroundColor: color.grad[9], marginBottom: 100}}
+                        onPress={() => navigation.navigate('InfoSale')}
+                    >
+                        <Text>{dic.next[iLang]} </Text>
+                    </Button>
                 )
             }
 

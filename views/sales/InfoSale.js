@@ -3,13 +3,21 @@ import { StyleSheet, View, ScrollView } from 'react-native';
 import { Container, Text, Toast, Icon, Fab, ActionSheet } from "native-base";
 import gS from "../../styles/globalStyles";
 import { main as color } from "../../data/colors";
-import { newSale as dic } from "../../data/languague";
+import { InfoSale as dic } from "../../data/languague";
 import GlobalContext from "../../context/global/globalContext";
 import SaleContext from "../../context/sale/saleContext";
 import { useNavigation } from "@react-navigation/native";
 import ListProducts from "../../components/ListProducts";
+import FormInfoSale from "../../components/FormInfoSale";
 
-const NewSale = ({ route }) => {
+// Apollo
+import { useMutation } from "@apollo/client";
+import { CREATE_USER } from "../../graphql/petitions";
+
+import ModalCategory from "../../components/ModalCategory";
+
+
+const InfoSale = ({ route }) => {
     const { iLang, user } = useContext(GlobalContext);
     const { products, emptyCart } = useContext(SaleContext);
 
@@ -22,20 +30,8 @@ const NewSale = ({ route }) => {
 
     return (
         <Container style={[gS.container]}>
-            <ScrollView>
-                <ListProducts edit total />
-            </ScrollView>
-            <View style={{ flex: 1 }}>
-                <Fab
-                    active={false}
-                    direction="up"
-                    containerStyle={{}}
-                    style={{ backgroundColor: color.grad[8] }}
-                    position="bottomRight"
-                    onPress={() => navigation.navigate('FormProduct')}>
-                    <Icon name="plus" type="AntDesign" />
-                </Fab>
-            </View>
+            <FormInfoSale />
+            
         </Container>
     );
 };
@@ -44,4 +40,4 @@ const styles = StyleSheet.create({
     
 });
 
-export default NewSale;
+export default InfoSale;

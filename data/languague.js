@@ -96,6 +96,9 @@ const language = {
         cancel: ['Cancelar', 'Cancel'],
         selectNumber: ['Selecciona un número de teléfono', 'Select phone number']
     },
+    ListCustomersCmp: {
+        searchBar: ['Buscar cliente', 'Search customer']
+    },
     // Settings
     settingsView: {
         language: ['Idioma', 'Language'],
@@ -110,7 +113,9 @@ const language = {
         back: ['Atrás', 'Back'],
         newSale: ['Nueva Venta', 'New Sale'],
         newProduct: ['Registro de producto', 'Product registration'],
+        infoSale: ['Información de venta', 'Sale information'],
         emptyCart: ['Vaciar Carrito', 'Empty Cart'],
+        selectCust: ['Lista de clientes', 'Customer list'],
         message: ['¿Estás seguro que deseas vacial el carrito de compras?', 'Are you sure you want to empty the shopping cart?'],
         ok: ['Sí', 'Ok'],
         cancel: ['Cancelar', 'Cancel']
@@ -128,6 +133,7 @@ const language = {
         edit: ['Editar', 'Edit'],
         delete: ['Eliminar', 'Delete'],
         selectOpt: ['Selecciona una acción', 'Select action'],
+        next: ['Siguiente', 'Next'],
         cancel: ['Cancelar', 'Cancel'],
         cost: ['Valor', 'Cost'],
         quantity: ['Cantidad', 'Quantity'],
@@ -141,6 +147,26 @@ const language = {
         quantity: ['Cantidad', 'Quantity'],
         add: ['Añadir', 'Add'],
         update: ['Actualizar', 'Update']
+    },
+    formInfoSaleCmp: {
+        product: ['Nombre producto', 'Product name'],
+        category: ['Categoría', 'Category'],
+        woman: ['Mujer', 'Woman'],
+        cost: ['Precio', 'Cost'],
+        quantity: ['Cantidad', 'Quantity'],
+        add: ['Añadir', 'Add'],
+        update: ['Actualizar', 'Update'],
+
+        customer: ['Cliente', 'Customer'],
+        day: ['Día', 'Day'],
+        month: ['Mes', 'Month'],
+        year: ['Año', 'Year'],
+        description: ['Descripción/Notas', 'Description/Notas'],
+        today: ['Fecha de compra: Hoy', 'Purchase Date: Today'],
+        credit: ['Plan separe', 'Credit'],
+        yes: ['Sí', 'Yes'],
+        no: ['No', 'No'],
+        cancel: ['Cancelar', 'Cancel']
     }
 };
 
