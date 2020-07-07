@@ -44,7 +44,7 @@ const DataSaleTotal = ({ title, value }) => {
 
 const Confirm = () => {
     const { iLang, user } = useContext(GlobalContext);
-    const { products, sale, parseMoney, updateSale } = useContext(SaleContext);
+    const { products, sale, parseMoney } = useContext(SaleContext);
     const [date, setDate] = useState(new Date());
     console.log('Confirm View');
     // console.log(user);
@@ -79,32 +79,26 @@ const Confirm = () => {
         }
     };
 
-    const goTo = () => {
-        const sale = {
-            total: getTotal()
-        }
-        // updateSale(sale);
-        navigation.navigate('InfoSale');
-    }
-
     const finalizePurchase = async () => {
         try {
+            const paymentVars = sale.credit ? [
+                {
+                    quantity: sale.payment[0]['payment'],
+                    date: new Date()
+                }
+            ] : [];
             const serverVars = {
                 "input": {
                     "client": sale.customer,
                     "total": getTotalFinal(),
                     "register": sale.register,
                     "credit": sale.credit,
+                    "finalized": sale.credit ? false : true,
                     "cellar": sale.cellar || null,
                     "description": sale.description
                 },
                 "products": products,
-                "payments": [
-                    {
-                        quantity: sale.payment[0]['payment'],
-                        date: new Date()
-                    }
-                ]
+                "payments": paymentVars
             };
             console.log(serverVars);
             const { data } = await createSale({
@@ -115,7 +109,8 @@ const Confirm = () => {
 
             // Mostrar mensaje de éxito sebas bebesssss
             if (data.createSale) {
-                alert('Creada');
+                // Redireccionar y reiniciar variables globales (En la pagina redireccionada)
+                navigation.navigate('Sales', { restart: true });
             }
 
             // Redireccionar a inicio de Sesion
@@ -150,15 +145,19 @@ const Confirm = () => {
                         <View style={{ marginTop: 30 }}>
                             <DataSale title={dic.total[iLang]} value={'$ ' + parseMoney(getTotal())} />
                             <DataSale title={dic.creditInit[iLang]} value={'- $ ' + parseMoney(sale.payment[0]['payment'])} />
+                            <View style={{ paddingVertical: 1, backgroundColor: color.main, marginLeft: 60, marginVertical: 5 }} />
+                            <DataSaleTotal title={dic.saldo[iLang]} value={'$ ' + parseMoney(getTotalFinal()) } />
                         </View>
                     ) : (
                             <View style={{ marginTop: 30 }}>
-                                <DataSale title={dic.creditInit[iLang]} value={'$ ' + parseMoney(sale.payment[0]['payment'])} />
+                                <DataSale title={dic.total[iLang]} value={'$ ' + parseMoney(getTotal())} />
+                                <DataSale title={dic.payment[iLang]} value={'- $ ' + parseMoney(getTotal())} />
+                                <View style={{ paddingVertical: 1, backgroundColor: color.main, marginLeft: 60, marginVertical: 5 }} />
+                                <DataSaleTotal title={dic.saldo[iLang]} value={'$ ' + '0'} />
                             </View>
                         )
                 }
-                <View style={{ paddingVertical: 1, backgroundColor: color.main, marginLeft: 60, marginVertical: 5 }} />
-                <DataSaleTotal title={dic.saldo[iLang]} value={'$ ' + parseMoney(getTotalFinal())} />
+
 
                 <View style={{ marginHorizontal: 30, marginTop: 20, marginBottom: 100 }}>
                     <Button style={{ marginTop: 30, backgroundColor: color.dark, justifyContent: 'center' }} rounded onPress={finalizePurchase}>

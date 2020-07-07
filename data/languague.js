@@ -157,7 +157,8 @@ const language = {
         credit: ['Plan separe', 'Credit'],
         creditInit: ['Abono', 'Initial payment'],
         saldo: ['Saldo', 'Pending'],
-        finalize: ['Finalizar Compra', 'Finalize purchase']
+        finalize: ['Finalizar Compra', 'Finalize purchase'],
+        payment: ['Recibido', 'Payment']
     },
     formProductCmp: {
         product: ['Nombre producto', 'Product name'],

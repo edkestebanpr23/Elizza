@@ -41,7 +41,34 @@ const petitions = {
     mutation createSale ($input: SaleInput, $products: [ProductInput], $payments: [PaymentInput]) {
       createSale (input: $input, products: $products, payments: $payments)
     }
+  `,
+  GET_SALES: gql`
+    query getSales {
+      getSales {
+        id
+        worker
+        client
+        finalized
+        total
+        description
+        products {
+          product
+          category
+          woman
+          price
+          quantity
+        }
+        credit
+        payments {
+          quantity
+          date
+        }
+        cellar
+        register
+      }
+    }
   `
+
 };
 
 module.exports = petitions;

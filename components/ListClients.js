@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Keyboard } from 'react-native';
-import { Container, Content, List, ListItem, Item, Text, Icon, Input, Header, Button } from "native-base";
-import { gql, useQuery } from "@apollo/client";
+import { Keyboard } from 'react-native';
+import { Container, Content, List, ListItem, Item, Text, Icon, Input, Header } from "native-base";
+import { useQuery } from "@apollo/client";
 import { GET_CUSTOMERS } from "../graphql/petitions";
 import { useNavigation } from "@react-navigation/native";
 import { ListCustomersCmp as dic } from "../data/languague";
