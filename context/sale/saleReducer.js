@@ -1,4 +1,4 @@
-import { ADD_PRODUCT, DELETE_PRODUCT, UPDATE_PRODUCT } from "../types";
+import { ADD_PRODUCT, DELETE_PRODUCT, UPDATE_PRODUCT, SET_SALE, UPDATE_SALE } from "../types";
 
 export default (state, action) => {
     switch (action.type) {
@@ -16,6 +16,16 @@ export default (state, action) => {
             return {
                 ...state,
                 products: action.payload
+            };
+        case SET_SALE:
+            return {
+                ...state,
+                sale: action.payload
+            };
+        case UPDATE_SALE:
+            return {
+                ...state,
+                sale: { ...state.sale, ...action.payload}
             };
         default:
             return state;

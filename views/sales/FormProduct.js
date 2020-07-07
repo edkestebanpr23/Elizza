@@ -17,7 +17,7 @@ const FormProduct = ({ route }) => {
 
     const [modalVisible, setModalVisible] = useState(false);
     const [product, setProduct] = useState('');
-    const [cost, setCost] = useState(null);
+    const [price, setPrice] = useState(null);
     const [quantity, setQuantity] = useState(1);
     const [category, setCategory] = useState('');
 
@@ -25,7 +25,7 @@ const FormProduct = ({ route }) => {
     useEffect(() => {
         if (editing) {
             setProduct(lastProduct.product);
-            setCost(lastProduct.cost);
+            setPrice(lastProduct.price);
             setQuantity(lastProduct.quantity);
             setCategory(lastProduct.category);
         }
@@ -49,10 +49,10 @@ const FormProduct = ({ route }) => {
 
     // Añadir producto o editar, no es sumar cantidad...
     const add = () => {
-        if (product === '' || cost === null || quantity === '' || category === '' || cost === '' ) {
+        if (product === '' || price === null || quantity === '' || category === '' || price === '' ) {
             alert('Todos los campos son obligatorios');
             return;
-        } else if (parseInt(cost) <= 0) {
+        } else if (parseInt(price) <= 0) {
             alert('Precio no válido');
             return;
         }
@@ -65,10 +65,10 @@ const FormProduct = ({ route }) => {
             return;
         }
         if (!editing) {
-            const _product = { product, cost, quantity, category };
+            const _product = { product, price, quantity, category };
             addProduct(_product);
         } else {
-            const _product = { product, cost, quantity, category };
+            const _product = { product, price, quantity, category };
             editProduct(lastProduct, _product, index);
         }
         navigation.goBack();
@@ -97,7 +97,7 @@ const FormProduct = ({ route }) => {
 
                     <Item floatingLabel>
                         <Label style={styles.label}>{dic.cost[iLang]}</Label>
-                        <Input value={cost} onChangeText={text => setCost(text)} style={styles.input} keyboardType='numeric' />
+                        <Input value={price} onChangeText={text => setPrice(text)} style={styles.input} keyboardType='numeric' />
                     </Item>
 
                     <TouchableWithoutFeedback onPress={() => setModalVisible(!modalVisible)}>

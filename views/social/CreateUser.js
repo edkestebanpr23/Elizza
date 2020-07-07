@@ -7,7 +7,7 @@ import { singupView as dic } from "../../data/languague";
 import GlobalContext from "../../context/global/globalContext";
 import { useNavigation } from "@react-navigation/native";
 
-
+ 
 // Apollo
 import { useMutation } from "@apollo/client";
 import { CREATE_USER } from "../../graphql/petitions";

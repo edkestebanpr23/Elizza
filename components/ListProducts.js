@@ -14,14 +14,14 @@ import { useNavigation } from "@react-navigation/native";
  */
 const ListProducts = (props) => {
     const { iLang } = useContext(GlobalContext);
-    const { products, parseMoney, deleteProduct } = useContext(SaleContext);
+    const { products, parseMoney, deleteProduct, setSale } = useContext(SaleContext);
     const { edit, total } = props || false;
     const [_message, setMessage] = useState(null);
-
+    const [ _total, setTotal ] = useState(0);
     // React Navigation
     const navigation = useNavigation();
 
-    console.log('Productos:', products);
+    // console.log('Productos:', products);
 
     /**
      * Functions
@@ -75,9 +75,10 @@ const ListProducts = (props) => {
         let total = 0;
         if (products) {
             products.forEach(product => {
-                total = total + parseInt(product.cost) * parseInt(product.quantity);
+                total = total + parseInt(product.price) * parseInt(product.quantity);
             });
         }
+        // setTotal(total);
         return total;
     };
 
@@ -131,13 +132,13 @@ const ListProducts = (props) => {
                                 </View>
                                 <View style={{ flex: 1, flexDirection: 'row' }}>
                                     <View style={{ flexBasis: '33%' }}>
-                                        <Text style={styles.productInfo}>{parseMoney(product.cost)}</Text>
+                                        <Text style={styles.productInfo}>{parseMoney(product.price)}</Text>
                                     </View>
                                     <View style={{ flexBasis: '33%' }}>
                                         <Text style={styles.productInfo}>{product.quantity}</Text>
                                     </View>
                                     <View style={{ flexBasis: '33%' }}>
-                                        <Text style={styles.productInfo}>${parseMoney(product.cost * product.quantity)}</Text>
+                                        <Text style={styles.productInfo}>${parseMoney(product.price * product.quantity)}</Text>
                                     </View>
                                 </View>
                             </View>
@@ -155,15 +156,7 @@ const ListProducts = (props) => {
                 )
             }
 
-            {
-                products && (
-                    <Button rounded block style={{backgroundColor: color.grad[9], marginBottom: 100}}
-                        onPress={() => navigation.navigate('InfoSale')}
-                    >
-                        <Text>{dic.next[iLang]} </Text>
-                    </Button>
-                )
-            }
+            
 
             {
                 _message && showAlert()

@@ -116,6 +116,7 @@ const language = {
         infoSale: ['Información de venta', 'Sale information'],
         emptyCart: ['Vaciar Carrito', 'Empty Cart'],
         selectCust: ['Lista de clientes', 'Customer list'],
+        confirm: ['Confirmación de venta', 'Sale confirmation'],
         message: ['¿Estás seguro que deseas vacial el carrito de compras?', 'Are you sure you want to empty the shopping cart?'],
         ok: ['Sí', 'Ok'],
         cancel: ['Cancelar', 'Cancel']
@@ -138,6 +139,25 @@ const language = {
         cost: ['Valor', 'Cost'],
         quantity: ['Cantidad', 'Quantity'],
         total: ['Total', 'Total']
+    },
+    confirm: {
+        noProducts: ['Sin productos', 'No products'],
+        edit: ['Editar', 'Edit'],
+        delete: ['Eliminar', 'Delete'],
+        selectOpt: ['Selecciona una acción', 'Select action'],
+        next: ['Siguiente', 'Next'],
+        cancel: ['Cancelar', 'Cancel'],
+        cost: ['Valor', 'Cost'],
+        quantity: ['Cantidad', 'Quantity'],
+        total: ['Total', 'Total'],
+        yes: ['Sí', 'Yes'],
+        no: ['No', 'No'],
+        customer: ['Cliente', 'Customer'],
+        date: ['Fecha', 'Date'],
+        credit: ['Plan separe', 'Credit'],
+        creditInit: ['Abono', 'Initial payment'],
+        saldo: ['Saldo', 'Pending'],
+        finalize: ['Finalizar Compra', 'Finalize purchase']
     },
     formProductCmp: {
         product: ['Nombre producto', 'Product name'],
@@ -162,11 +182,21 @@ const language = {
         month: ['Mes', 'Month'],
         year: ['Año', 'Year'],
         description: ['Descripción/Notas', 'Description/Notas'],
-        today: ['Fecha de compra: Hoy', 'Purchase Date: Today'],
+        today: ['Fecha de compra:', 'Purchase Date:'],
         credit: ['Plan separe', 'Credit'],
+        cellar: ['Bodega', 'Cellar'],
         yes: ['Sí', 'Yes'],
         no: ['No', 'No'],
-        cancel: ['Cancelar', 'Cancel']
+        cancel: ['Cancelar', 'Cancel'],
+        addCredit: ['Añadir un abono', 'Add payment'],
+        add: ['Añadir', 'Add'],
+        initialPay: ['Abono inicial', 'Initial payment'],
+        finalize: ['Finalizar', 'Finalize purchase'],
+        finalize: ['Continuar', 'Continue'],
+    },
+    DatePicker: {
+        show: ['Mostrar selector de fecha', 'Show Date Picker'],
+        hidde: ['Ocultar selector', 'Hidde Picker']
     }
 };
 

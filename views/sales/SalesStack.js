@@ -12,6 +12,7 @@ import NewSale from "./NewSale";
 import FormProduct from "./FormProduct";
 import InfoSale from "./InfoSale";
 import SelectCustomer from "./SelectCustomer";
+import Confirm from "./Confirm";
 
 const Stack = createStackNavigator();
 
@@ -114,6 +115,21 @@ const SalesStack = () => {
                 options={{
                     headerShown: true,
                     title: dic.selectCust[iLang],
+                    headerTintColor: color.grad[0],
+                    headerStyle: {
+                        backgroundColor: color.grad[9],
+                    },
+                    headerBackTitle: dic.back[iLang],
+                }}
+            >
+            </Stack.Screen>
+
+            <Stack.Screen
+                name="Confirm"
+                component={Confirm}
+                options={{
+                    headerShown: true,
+                    title: dic.confirm[iLang],
                     headerTintColor: color.grad[0],
                     headerStyle: {
                         backgroundColor: color.grad[9],

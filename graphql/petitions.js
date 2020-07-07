@@ -37,6 +37,11 @@ const petitions = {
       }
     }
   `,
+  CREATE_SALE: gql`
+    mutation createSale ($input: SaleInput, $products: [ProductInput], $payments: [PaymentInput]) {
+      createSale (input: $input, products: $products, payments: $payments)
+    }
+  `
 };
 
 module.exports = petitions;
