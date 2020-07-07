@@ -78,6 +78,7 @@ const FormInfoSale = ({ route }) => {
             sale.payment = [
                 {
                     payment,
+                    quantity: payment,
                     date: date.toString()
                 }
             ];

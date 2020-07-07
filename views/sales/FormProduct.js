@@ -65,10 +65,10 @@ const FormProduct = ({ route }) => {
             return;
         }
         if (!editing) {
-            const _product = { product, price, quantity, category };
+            const _product = { product, price: parseInt(price), quantity, category };
             addProduct(_product);
         } else {
-            const _product = { product, price, quantity, category };
+            const _product = { product, price: parseInt(price), quantity, category };
             editProduct(lastProduct, _product, index);
         }
         navigation.goBack();

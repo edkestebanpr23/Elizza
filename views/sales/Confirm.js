@@ -99,7 +99,12 @@ const Confirm = () => {
                     "description": sale.description
                 },
                 "products": products,
-                "payments": sale.payment || []
+                "payments": [
+                    {
+                        quantity: sale.payment[0]['payment'],
+                        date: new Date()
+                    }
+                ]
             };
             console.log(serverVars);
             const { data } = await createSale({
@@ -119,7 +124,7 @@ const Confirm = () => {
         } catch (error) {
             // alert(null);
             console.log('Error::', error);
-            
+
         }
     };
 
