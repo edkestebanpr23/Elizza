@@ -1,41 +1,49 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { Keyboard, View, StyleSheet, ScrollView } from 'react-native';
-import { Container, Header, Content, Button, ListItem, Text, Icon, Left, Body, Right, Switch, Header as SearchBar, Item, Input, Fab } from 'native-base';
+import { View, StyleSheet, FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
+import { Text, Icon } from 'native-base';
 import { salesView as dic } from "../data/languague";
-import SaleContext from "../context/sale/saleContext";
-import GlobalContext from "../context/global/globalContext";
+// import SaleContext from "../context/sale/saleContext";
+// import GlobalContext from "../context/global/globalContext";
 import { useNavigation } from "@react-navigation/native";
 import { main as color } from "../data/colors";
 
-import { useQuery } from "@apollo/client";
+import { useQuery, gql } from "@apollo/client";
 import { GET_SALES, GET_CUSTOMERS } from "../graphql/petitions";
 
-const ListSales = ({ client }) => {
+const ListSales = ({ iLang }) => {
     const navigation = useNavigation();
     const { data, loading, error } = useQuery(GET_SALES);
-    const [customers, setCustomers] = useState([]);
-    console.log('data', data);
-    // console.log('loading', loading);
-    // console.log('error', error);
+    const { data: dataCustomers } = useQuery(GET_CUSTOMERS);
 
-    // try {
-    //     console.log('Usuarios', clients);    
-    //     const clients = client.readQuery({query: GET_CUSTOMERS});
-    //     setCustomers(clients.getClients);
-    //     console.log('Usuarios', clients);    
-    // } catch (error) {
-    //     console.log('Aun no hay usuarios desde el servidor');
-    //     console.log(error);
-    // }
+
+    // Recibe un id de cliente y retorna un cliente
+    const getConstumerById = id => {
+        if (dataCustomers) {
+            let cli = dataCustomers.getClients.find(client => client.id === id);
+            console.log(cli);
+            return cli;
+        }
+    };
 
     return (
-        <View style={{ marginBottom: 100 }}>
+        <SafeAreaView style={{ flex: 1, marginBottom: 100 }}>
             {
-                data && data.getSales.map(sale => (
-                    <SaleCpm sale={sale} />
-                ))
+                data && (
+                    <FlatList
+                        data={data.getSales}
+                        renderItem={({ item }) => {
+                            const customer = getConstumerById(item.client);
+                            return (
+                                <TouchableOpacity onPress={() => navigation.navigate('Customer', { iLang, customer, sale: item })} activeOpacity={0.8}>
+                                    <SaleCpm sale={item} cli={customer} key={item.id} />
+                                </TouchableOpacity>
+                            )
+                        }}
+                        keyExtractor={item => item.id}
+                    />
+                )
             }
-        </View>
+        </SafeAreaView>
     );
 };
 
@@ -50,8 +58,6 @@ const getIconState = (state) => {
 const getTotal = (payments, products) => {
     let payment = 0;
     let total = 0;
-    console.log('----');
-    console.log(payments);
 
     payments.forEach(e => {
         payment += e.quantity;
@@ -60,8 +66,6 @@ const getTotal = (payments, products) => {
     products.forEach(e => {
         total += e.price * e.quantity;
     });
-    console.log('abono',payment);
-    console.log('total',total);
     return total - payment;
 };
 
@@ -78,7 +82,7 @@ const DataSale = ({ title, value }) => {
     )
 }
 
-const SaleCpm = ({ sale }) => {
+const SaleCpm = ({ sale, cli }) => {
     let onTime = true;
     let state = '';
     let expiredDays = 0;
@@ -96,7 +100,6 @@ const SaleCpm = ({ sale }) => {
         let aux = today.getTime() - endDate.getTime();
         expiredDays = Math.round(aux / (1000 * 60 * 60 * 24));
     } else if (sale.credit == true) {
-        console.log('credito')
         state = 'stateOnTime';
         let aux = endDate.getTime() - today.getTime();
         expiredDays = Math.round(aux / (1000 * 60 * 60 * 24));
@@ -110,7 +113,7 @@ const SaleCpm = ({ sale }) => {
                 {
                     getIconState(state)
                 }
-                <Text style={styles.client}>{'   ' + sale.client} </Text>
+                <Text style={styles.client}>{'   ' + cli.name} </Text>
             </Text>
 
             <View>
@@ -125,7 +128,7 @@ const SaleCpm = ({ sale }) => {
                                     <Text style={styles.titleInfo}>Vence</Text>
                                 </View>
                                 <View style={{ flexBasis: '33%' }}>
-                                    <Text style={[styles.titleInfo, styles.textColor(state)]}>{ state === 'stateOnTime' ? 'Días' : 'Días vencidos' }</Text>
+                                    <Text style={[styles.titleInfo, styles.textColor(state)]}>{state === 'stateOnTime' ? 'Días' : 'Días vencidos'}</Text>
                                 </View>
                             </>
                         )

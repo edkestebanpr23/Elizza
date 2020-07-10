@@ -36,7 +36,7 @@ const Sales = ({ route }) => {
     };
 
     return (
-        <View style={{flex: 1}}>
+        <View style={{ flex: 1 }}>
 
             <SearchBar searchBar rounded style={{ backgroundColor: color.grad[9], }}>
                 <Item style={{ backgroundColor: color.light }} >
@@ -48,15 +48,16 @@ const Sales = ({ route }) => {
 
             <ScrollView style={{ flex: 1 }}>
                 <View>
-                    <ApolloConsumer>
-                        {
-                            client => <ListSales client={client} />
-                        }
+                    <ListSales iLang={iLang} />
+                    {/* <ApolloConsumer> */}
+                    {/* {
+                            client => <ListSales />
+                        } */}
 
-                    </ApolloConsumer>
+                    {/* </ApolloConsumer> */}
                 </View>
             </ScrollView>
-            
+
             <View>
                 <Fab
                     active={false}

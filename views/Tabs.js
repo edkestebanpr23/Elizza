@@ -27,6 +27,7 @@ const Tabs = () => {
         <Root>
             <NavigationContainer>
                 <Tab.Navigator
+                    initialRouteName='Social'
                     tabBarOptions={{
                         activeBackgroundColor: colors.main.grad[9],
                         inactiveBackgroundColor: colors.main.grad[5],
@@ -35,9 +36,16 @@ const Tabs = () => {
                         style: styles.tabBar,
                         tabStyle: { borderTopStartRadius: 15, borderTopEndRadius: 15, marginHorizontal: 1 },
                         // style={ margin: 3, },
-
                     }}
                 >
+                    <Tab.Screen
+                        name='Social'
+                        component={SocialStack}
+                        options={{
+                            tabBarIcon: () => <Icon name="users" color={colors.main.grad[1]} size={24} />,
+                            title: dic.people[iLang]
+                        }}
+                    />
 
                     <Tab.Screen
                         name='Sales'
@@ -49,14 +57,6 @@ const Tabs = () => {
 
                     />
 
-                    <Tab.Screen
-                        name='Social'
-                        component={SocialStack}
-                        options={{
-                            tabBarIcon: () => <Icon name="users" color={colors.main.grad[1]} size={24} />,
-                            title: dic.people[iLang]
-                        }}
-                    />
 
                     {/* <Tab.Screen
                         name='Profile'

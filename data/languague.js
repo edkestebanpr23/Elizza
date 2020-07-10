@@ -117,6 +117,7 @@ const language = {
         emptyCart: ['Vaciar Carrito', 'Empty Cart'],
         selectCust: ['Lista de clientes', 'Customer list'],
         confirm: ['Confirmación de venta', 'Sale confirmation'],
+        bill: ['Factura', 'Bill'],
         message: ['¿Estás seguro que deseas vacial el carrito de compras?', 'Are you sure you want to empty the shopping cart?'],
         ok: ['Sí', 'Ok'],
         cancel: ['Cancelar', 'Cancel']
