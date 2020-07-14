@@ -96,6 +96,17 @@ const language = {
         cancel: ['Cancelar', 'Cancel'],
         selectNumber: ['Selecciona un número de teléfono', 'Select phone number']
     },
+    saleCustomerCmp: {
+        products: ['Productos', 'Products'],
+        payments: ['Abonos', 'Payments'],
+        totalSale: ['Total venta', 'Total purchase'],
+        dateSale: ['Fecha venta', 'Purchase date'],
+        description: ['Descripción', 'Description'],
+        totalPayment: ['Total abonado', 'Total payments'],
+        remaining: ['Restante', 'Remaining'],
+        addPayment: ['Añadir abono', 'Add payment'],
+        finalized: ['Finalizado', 'Finalized']
+    },
     ListCustomersCmp: {
         searchBar: ['Buscar cliente', 'Search customer']
     },
@@ -199,6 +210,9 @@ const language = {
     DatePicker: {
         show: ['Mostrar selector de fecha', 'Show Date Picker'],
         hidde: ['Ocultar selector', 'Hidde Picker']
+    },
+    btnAddPay: {
+        addPayment: ['Añadir abono', 'Add payment'],
     }
 };
 

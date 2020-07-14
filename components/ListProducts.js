@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { StyleSheet, View, Keyboard } from 'react-native';
 import { Container, Text, Toast, Icon, ActionSheet, Button } from "native-base";
 import { main as color } from "../data/colors";
@@ -11,18 +11,30 @@ import { useNavigation } from "@react-navigation/native";
  * Las props que recibe son... 
  * edit: Permite editar los productos
  * total: Muestra el total de los productos
+ * products: Si recibe un array de productos, ignora los productos del context, y muestra los recibidos
  */
 const ListProducts = (props) => {
     const { iLang } = useContext(GlobalContext);
     const { products, parseMoney, deleteProduct, setSale } = useContext(SaleContext);
-    const { edit, total } = props || false;
+    const { edit, total, products: propProducts, getTotal: getTotalSale } = props || false;
     const [_message, setMessage] = useState(null);
-    const [ _total, setTotal ] = useState(0);
+    const [_total, setTotal] = useState(0);
+
+    const [dataProducts, setDataProducts] = useState([]);
     // React Navigation
     const navigation = useNavigation();
 
-    // console.log('Productos:', products);
+    useEffect(() => {
+        if (propProducts) {
+            console.log('Productos desde props');
+            setDataProducts(propProducts);
+        } else {
+            console.log('Productos desde context');
+            setDataProducts(products);
+        }
+    }, [propProducts, products]);
 
+    console.log('Productos en vista:', dataProducts);
     /**
      * Functions
      */
@@ -73,12 +85,15 @@ const ListProducts = (props) => {
     // Retorna el subtotal de la compra
     const getTotal = () => {
         let total = 0;
-        if (products) {
-            products.forEach(product => {
+        if (dataProducts) {
+            dataProducts.forEach(product => {
                 total = total + parseInt(product.price) * parseInt(product.quantity);
             });
         }
         // setTotal(total);
+        if (getTotalSale) {
+            getTotalSale(total)
+        }
         return total;
     };
 
@@ -87,7 +102,7 @@ const ListProducts = (props) => {
     return (
         <View style={{ marginTop: 0 }}>
             {
-                products && products.length === 0 ? (
+                dataProducts && dataProducts.length === 0 ? (
                     <View style={{ backgroundColor: color.main, marginTop: 30 }}>
                         <Text style={{ color: color.grad[0], paddingVertical: 10, alignSelf: 'center' }}>{dic.noProducts[iLang]} </Text>
                     </View>
@@ -97,8 +112,8 @@ const ListProducts = (props) => {
             }
 
             {
-                products && (
-                    products.map((product, i) => (
+                dataProducts && (
+                    dataProducts.map((product, i) => (
                         <View key={product.product} style={styles.productContainer}>
                             <View style={styles.product}>
                                 <View style={{ flex: 1, flexDirection: 'row' }}>
@@ -156,7 +171,7 @@ const ListProducts = (props) => {
                 )
             }
 
-            
+
 
             {
                 _message && showAlert()

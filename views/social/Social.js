@@ -28,7 +28,7 @@ const Social = () => {
   };
 
   return (
-    <Container>
+    <Container style={{ flex: 1 }}>
       {/* <SearchBar searchBar rounded style={{ backgroundColor: color.grad[9], }}>
         <Item style={{ backgroundColor: color.light }} >
           <Icon name="ios-search" onPress={() => console.log(1)} style={{ color: color.dark }} />
@@ -40,12 +40,12 @@ const Social = () => {
           <Text style={{color: color.light}}>Search</Text>
         </Button> */}
 
-      <Content>
+      {/* <Content style={{ flex: 1 }}> */}
 
-        <ListClients iLang={iLang} redirect={false} searchbar onSelectCustomer={selectCustomer} />
+      <ListClients iLang={iLang} redirect={false} searchbar onSelectCustomer={selectCustomer} />
 
 
-      </Content>
+      {/* </Content> */}
 
       <View style={{ flex: 1 }}>
         <Fab

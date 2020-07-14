@@ -20,7 +20,7 @@ const ListSales = ({ iLang }) => {
     const getConstumerById = id => {
         if (dataCustomers) {
             let cli = dataCustomers.getClients.find(client => client.id === id);
-            console.log(cli);
+            // console.log(cli);
             return cli;
         }
     };

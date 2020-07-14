@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Keyboard } from 'react-native';
+import { Keyboard, View, ScrollView } from 'react-native';
 import { Container, Content, List, ListItem, Item, Text, Icon, Input, Header } from "native-base";
 import { useQuery } from "@apollo/client";
 import { GET_CUSTOMERS } from "../graphql/petitions";
@@ -18,8 +18,11 @@ const ListClients = ({ iLang, searchbar = true, redirect = true, onSelectCustome
      * error: Si ocurrio un error...
      */
     const { data, loading, error } = useQuery(GET_CUSTOMERS);
+    // console.log('Lista de clientes:', data.getClients);
+    console.log('Loading...', loading);
 
     const [name, setName] = useState('');
+    const [count, setCount] = useState(0);
     const [customers, setCustomers] = useState(<></>);
 
     const onSelect = (cli) => {
@@ -37,7 +40,7 @@ const ListClients = ({ iLang, searchbar = true, redirect = true, onSelectCustome
             ));
             setCustomers(list);
         }
-    }, [data]);
+    }, [data, count]);
 
 
     const filter = text => {
@@ -81,7 +84,7 @@ const ListClients = ({ iLang, searchbar = true, redirect = true, onSelectCustome
     };
 
     return (
-        <Container>
+        <>
             {
                 searchbar && (
                     <Header searchBar rounded style={{ backgroundColor: color.grad[9], }}>
@@ -91,14 +94,17 @@ const ListClients = ({ iLang, searchbar = true, redirect = true, onSelectCustome
                             <Icon name="ios-close-circle" onPress={() => clearInput()} style={{ color: color.dark }} />
                         </Item>
                     </Header>
+
                 )
             }
-            <List>
-                {
-                    !loading && customers
-                }
-            </List>
-        </Container>
+            <ScrollView>
+                <List>
+                    {
+                        !loading && customers
+                    }
+                </List>
+            </ScrollView>
+        </>
     );
 }
 

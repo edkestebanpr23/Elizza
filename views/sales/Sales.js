@@ -14,14 +14,13 @@ import { GET_SALES } from "../../graphql/petitions";
 
 const Sales = ({ route }) => {
     const { restart } = route.params || false;
-    const [isSearch, SetIsSearch] = useState(false);
     const { iLang } = useContext(GlobalContext);
     const { setSale, emptyCart } = useContext(SaleContext);
     const navigation = useNavigation();
     const { data, loading, error } = useQuery(GET_SALES);
-    console.log(data);
-    console.log(loading);
-    console.log(error);
+    // console.log(data);
+    // console.log(loading);
+    // console.log(error);
 
     useEffect(() => {
         // Si se redirecciona desde confirmar una venta, entonces se deben reiniciar las varibales globales
@@ -49,12 +48,6 @@ const Sales = ({ route }) => {
             <ScrollView style={{ flex: 1 }}>
                 <View>
                     <ListSales iLang={iLang} />
-                    {/* <ApolloConsumer> */}
-                    {/* {
-                            client => <ListSales />
-                        } */}
-
-                    {/* </ApolloConsumer> */}
                 </View>
             </ScrollView>
 
