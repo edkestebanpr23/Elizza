@@ -9,5 +9,6 @@ export const UPDATE_PRODUCT = 'UPDATE_PRODUCT';
 
 export const SET_SALE = 'SET_SALE';
 export const UPDATE_SALE = 'UPDATE_SALE';
+export const UPDATE_PAYMENT = 'UPDATE_PAYMENT';
 
 export const SET_CLIENTS = 'SET_CLIENTS';

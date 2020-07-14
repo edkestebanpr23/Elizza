@@ -26,15 +26,12 @@ const ListProducts = (props) => {
 
     useEffect(() => {
         if (propProducts) {
-            console.log('Productos desde props');
             setDataProducts(propProducts);
         } else {
-            console.log('Productos desde context');
             setDataProducts(products);
         }
     }, [propProducts, products]);
 
-    console.log('Productos en vista:', dataProducts);
     /**
      * Functions
      */

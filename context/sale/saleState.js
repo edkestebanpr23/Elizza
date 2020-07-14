@@ -1,19 +1,27 @@
 import React, { useReducer } from "react";
 import SaleReducer from "./saleReducer";
 import SaleContext from "./saleContext";
-import { ADD_PRODUCT, DELETE_PRODUCT, UPDATE_PRODUCT, SET_SALE, UPDATE_SALE } from "../types";
+import { ADD_PRODUCT, DELETE_PRODUCT, UPDATE_PRODUCT, SET_SALE, UPDATE_SALE, UPDATE_PAYMENT } from "../types";
 
 const SaleState = props => {
 
     // Creando un state inicial
     const initialState = {
         products: [],
-        sale: {}
+        sale: {},
+        payCounter: 0
     };
 
     // useReducer con dispatch para ejecutar las funciones
     const [state, dispatch] = useReducer(SaleReducer, initialState);
 
+    const payCount = () => {
+        console.log('Anadiendo 1 al payment', state.payCounter + 1);
+        dispatch({
+            type: UPDATE_PAYMENT,
+            payload: state.payCounter + 1
+        })
+    }
 
     const addProduct = product => {
         dispatch({
@@ -89,13 +97,15 @@ const SaleState = props => {
             value={{
                 products: state.products,
                 sale: state.sale,
+                payCounter: state.payCounter,
                 addProduct,
                 parseMoney,
                 deleteProduct,
                 editProduct,
                 emptyCart,
                 setSale,
-                updateSale
+                updateSale,
+                payCount
             }}
         >
             {props.children}

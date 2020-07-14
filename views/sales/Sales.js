@@ -15,7 +15,7 @@ import { GET_SALES } from "../../graphql/petitions";
 const Sales = ({ route }) => {
     const { restart } = route.params || false;
     const { iLang } = useContext(GlobalContext);
-    const { setSale, emptyCart } = useContext(SaleContext);
+    const { setSale, emptyCart, payCounter } = useContext(SaleContext);
     const navigation = useNavigation();
     const { data, loading, error } = useQuery(GET_SALES);
     // console.log(data);
@@ -28,7 +28,7 @@ const Sales = ({ route }) => {
             setSale({});
             emptyCart();
         }
-    }, []);
+    }, [payCounter]);
 
     const dismissKeyboard = () => {
         Keyboard.dismiss();
