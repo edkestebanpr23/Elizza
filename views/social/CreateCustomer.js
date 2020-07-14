@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import { StyleSheet, View, Keyboard, TouchableWithoutFeedback, ScrollView, Image } from 'react-native';
+import { StyleSheet, View, Keyboard, TouchableWithoutFeedback, ScrollView } from 'react-native';
 import { Container, Form, Input, Button, Item, Label, Text, H1, Toast, ListItem, Left, Icon, Body, Right, Switch, Textarea, Radio } from "native-base";
 import gS from "../../styles/globalStyles";
 import { main as color } from "../../data/colors";

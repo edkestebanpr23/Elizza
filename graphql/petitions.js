@@ -67,6 +67,32 @@ const petitions = {
         register
       }
     }
+  `,
+  UPDATE_PAYMENT: gql`
+    mutation updatePayment ($id: ID, $payment: PaymentInput) {
+      updatePayment (id: $id, payment: $payment) {
+        id
+        worker
+        client
+        finalized
+        total
+        description
+        products {
+          product
+          category
+          woman
+          price
+          quantity
+        }
+        credit
+        payments {
+          quantity
+          date
+        }
+        cellar
+        register
+      }
+    }
   `
 
 };

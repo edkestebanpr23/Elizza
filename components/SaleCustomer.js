@@ -20,7 +20,7 @@ const SaleCustomer = ({ iLang, sale }) => {
         setTotal(getTotal(sale.products));
     }, []);
 
-    const Payments = sale.credit ? (<PaymentsView payments={sale.payments} iLang={iLang} total={getTotal(sale.products)} />) : (<></>);
+    const Payments = sale.credit ? (<PaymentsView payments={sale.payments} iLang={iLang} total={getTotal(sale.products)} id={sale.id} />) : (<></>);
     parseToMoney(12000);
 
     return (
@@ -39,8 +39,13 @@ const SaleCustomer = ({ iLang, sale }) => {
     );
 };
 
-const PaymentsView = ({ payments, iLang, total }) => {
+const PaymentsView = ({ payments, iLang, total, id }) => {
     let totalPayments = 0;
+
+    const howMuchPay = (_payment) => {
+        console.log(_payment);
+    }
+
     return (
         <>
             <Separator text={dic.payments[iLang]} color={color} />
@@ -59,7 +64,7 @@ const PaymentsView = ({ payments, iLang, total }) => {
             <PaymentText text={dic.remaining[iLang] + ':'} quantity={total - totalPayments} bold money />
 
             <View style={{ paddingHorizontal: 40, marginTop: 30 }}>
-                <BtnAddPay color={color} iLang={iLang} />
+                <BtnAddPay color={color} iLang={iLang} id={id} remaining={total - totalPayments} onHowMuchPay={howMuchPay} />
             </View>
         </>
 
