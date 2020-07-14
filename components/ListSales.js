@@ -14,7 +14,7 @@ const ListSales = ({ iLang }) => {
     const navigation = useNavigation();
     const { data, loading, error } = useQuery(GET_SALES);
     const { data: dataCustomers } = useQuery(GET_CUSTOMERS);
-
+    console.log("ListSales:", data);
 
     // Recibe un id de cliente y retorna un cliente
     const getConstumerById = id => {

@@ -7,21 +7,20 @@ import { showToast } from "../../funtions";
 const BtnAddPay = ({ color, iLang, id, remaining, onHowMuchPay }) => {
 
     // Apollo Mutation
-    const [updatePayment] = useMutation(UPDATE_PAYMENT);
-    // , {
-    //     update(cache, { data: { createClient } }) {
-    //         try {
-    //             const { getClients } = cache.readQuery({ query: GET_CUSTOMERS });
-    //             console.log("1", getClients);
-    //             cache.writeQuery({
-    //                 query: GET_CUSTOMERS,
-    //                 data: { getClients: getClients.concat([createClient]) }
-    //             })
-    //         } catch (error) {
-    //             console.log(error);
-    //         }
-    //     }
-    // });
+    const [updatePayment] = useMutation(UPDATE_PAYMENT, {
+        update(cache, { data: { updatePayment } }) {
+            try {
+                const { getSales } = cache.readQuery({ query: GET_SALES });
+                console.log("1", getSales);
+                cache.writeQuery({
+                    query: GET_SALES,
+                    data: { getSales: getSales.concat([updatePayment]) }
+                })
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    });
 
     async function addPayment(quantity) {
         const date = new Date();
