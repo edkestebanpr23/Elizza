@@ -5,8 +5,15 @@ import { Platform } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import { setContext } from "apollo-link-context";
 
+// ¿Modo local?
+const local = false;
 
-const url = Platform.OS === 'ios' ? 'http://192.168.1.51:4001/graphql' : 'http://192.168.1.61:4000/';
+var url = Platform.OS === 'ios' ? 'http://192.168.1.51:3002/graphql' : 'http://192.168.1.54:4001/graphql';
+if (!local) {
+    console.log('Accediendo al servidor https://elizaserver.herokuapp.com/graphql');
+    url = 'https://elizaserver.herokuapp.com/graphql';
+};
+
 const httpLink = createHttpLink({
     uri: url,
 });

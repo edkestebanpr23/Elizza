@@ -31,13 +31,13 @@ const InfoSale = ({ route }) => {
     return (
         <Container style={[gS.container]}>
             <FormInfoSale />
-            
+
         </Container>
     );
 };
 
 const styles = StyleSheet.create({
-    
+
 });
 
 export default InfoSale;

@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from 'react';
-import { View, StyleSheet, FlatList, SafeAreaView, TouchableOpacity } from 'react-native';
-import { Text, Icon } from 'native-base';
+import { View, StyleSheet, FlatList, SafeAreaView, TouchableOpacity, Keyboard } from 'react-native';
+import { Text, Icon, Header, Item, Input } from 'native-base';
 import { salesView as dic } from "../data/languague";
 // import SaleContext from "../context/sale/saleContext";
 // import GlobalContext from "../context/global/globalContext";
@@ -10,11 +10,25 @@ import { main as color } from "../data/colors";
 import { useQuery, gql } from "@apollo/client";
 import { GET_SALES, GET_CUSTOMERS } from "../graphql/petitions";
 
-const ListSales = ({ iLang }) => {
+const ListSales = ({ iLang, searchbar = true }) => {
     const navigation = useNavigation();
     const { data, loading, error } = useQuery(GET_SALES);
     const { data: dataCustomers } = useQuery(GET_CUSTOMERS);
+    const [textFilter, setTextFilter] = useState('');
+
     console.log("ListSales:", data);
+
+    // useEffect(() => {
+    //     if (data) {
+    //         console.log('Actualizando lista de clientes desde el useEffect');
+    //         const list = data.getClients.map(customer => (
+    //             <ListItem key={customer.telephone} onPress={(e) => console.log(customer)}>
+    //                 <Text>{customer.name} </Text>
+    //             </ListItem>
+    //         ));
+    //         setCustomers(list);
+    //     }
+    // }, [data, count]);
 
     // Recibe un id de cliente y retorna un cliente
     const getConstumerById = id => {
@@ -25,14 +39,55 @@ const ListSales = ({ iLang }) => {
         }
     };
 
+    const filter = text => {
+        setTextFilter(text);
+    }
+
+    const clearInput = text => {
+        setTextFilter('');
+        dismissKeyboard();
+        filter('');
+    };
+
+    const dismissKeyboard = () => {
+        Keyboard.dismiss();
+    };
+
     return (
-        <SafeAreaView style={{ flex: 1, marginBottom: 100 }}>
+        <SafeAreaView style={{ flex: 1 }}>
+            {
+                searchbar && (
+                    <Header searchBar rounded style={{ backgroundColor: color.grad[9], }}>
+                        <Item style={{ backgroundColor: color.light }} >
+                            <Icon name="ios-search" onPress={() => console.log(1)} style={{ color: color.dark }} />
+                            <Input placeholder={dic.searchBar[iLang]} onChangeText={text => filter(text)} value={textFilter} />
+                            <Icon name="ios-close-circle" onPress={() => clearInput()} style={{ color: color.dark }} />
+                        </Item>
+                    </Header>
+
+                )
+            }
             {
                 data && (
                     <FlatList
                         data={data.getSales}
                         renderItem={({ item }) => {
                             const customer = getConstumerById(item.client);
+                            if (textFilter != '') {
+                                // console.log('Nombre:' + customer.name + ' --- Filtro:' + textFilter);
+                                if (customer.name.toLowerCase().match(textFilter.toLowerCase())) {
+                                    // console.log('Muestra a ' + customer.name, customer.name.toLowerCase().match(textFilter));
+                                    return (
+                                        <TouchableOpacity onPress={() => navigation.navigate('Customer', { iLang, customer, sale: item })} activeOpacity={0.8}>
+                                            <SaleCpm sale={item} cli={customer} key={item.id} />
+                                        </TouchableOpacity>
+                                    )
+                                } else {
+                                    // console.log('No retorna a ' + customer.name, customer.name.toLowerCase().match(textFilter));
+                                    return <></>;
+                                }
+                            }
+
                             return (
                                 <TouchableOpacity onPress={() => navigation.navigate('Customer', { iLang, customer, sale: item })} activeOpacity={0.8}>
                                     <SaleCpm sale={item} cli={customer} key={item.id} />

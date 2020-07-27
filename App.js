@@ -12,11 +12,12 @@ import GlobalContext from "./context/global/globalContext";
 const App = () => {
   console.ignoredYellowBox = ['Warning: Each', 'Warning: Failed'];
 
-  const { session } = useContext(GlobalContext);
+  const { session, user } = useContext(GlobalContext);
 
   console.log('La sesion es:', session);
+  console.log('El usuario es:', user);
 
-  const View = session ? <Tabs /> : <Start />;
+  const View = (session && user) ? <Tabs /> : <Start />;
 
   return (
     <>

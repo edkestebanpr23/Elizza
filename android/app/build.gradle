@@ -123,6 +123,18 @@ def enableHermes = project.ext.react.get("enableHermes", false);
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion
 
+    subprojects {
+        if (project.name.contains('react-native-image-picker')) {
+            buildscript {
+                repositories {
+                    jcenter()
+                    google()
+                    maven { url "https://dl.bintray.com/android/android-tools/"  }
+                }
+            }
+        }
+    }
+
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -144,6 +156,14 @@ android {
         }
     }
     signingConfigs {
+        release {
+            if (project.hasProperty('ELIZZA_STORE_FILE')) {
+                storeFile file(ELIZZA_STORE_FILE)
+                storePassword ELIZZA_STORE_PASSWORD
+                keyAlias ELIZZA_KEY_ALIAS
+                keyPassword ELIZZA_KEY_PASSWORD
+            }
+        }
         debug {
             storeFile file('debug.keystore')
             storePassword 'android'
@@ -158,7 +178,7 @@ android {
         release {
             // Caution! In production, you need to generate your own keystore file.
             // see https://facebook.github.io/react-native/docs/signed-apk-android.
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
         }

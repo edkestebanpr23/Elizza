@@ -16,8 +16,12 @@ const Stack = createStackNavigator();
 const SocialStack = () => {
 
     // Global Context
-    const { iLang, user } = useContext(GlobalContext);
-    console.log(user);
+    const { iLang, user, killSession } = useContext(GlobalContext);
+    console.log('user', user);
+    if (!user) {
+        console.log('Error en inicio de sesion: user', user);
+        killSession();
+    }
 
     return (
         <Stack.Navigator>

@@ -68,7 +68,7 @@ const FormInfoSale = ({ route }) => {
         // Plan separe
         if (credit) {
             console.log('Credito')
-            if (payment < 10000 ) {
+            if (payment < 10000) {
                 alert('El abono inicial debe ser mayor a $ 10.000');
                 return;
             } else if (parseInt(cellar) === 0) {
@@ -90,7 +90,7 @@ const FormInfoSale = ({ route }) => {
         sale.description = description;
         sale.credit = credit;
         sale.finalize = false;
-        
+
         console.log('Actualizando sale...');
         updateSale(sale);
         console.log('Sale Actualizado...');
@@ -119,9 +119,9 @@ const FormInfoSale = ({ route }) => {
                     </TouchableWithoutFeedback>
 
                     {/* Modal para seleccionar cliente */}
-                    <View style={{ flex: 1, borderRadius: 50 }}>
+                    <View style={{ flex: 1, borderRadius: 50, backgroundColor: 'white', }}>
                         <Modal isVisible={isModalVisible}>
-                            <View style={{ flex: 1 }}>
+                            <View style={{ flex: 1, backgroundColor: 'white', }}>
                                 <ListClients iLang={iLang} searchbar redirect={false} onSelectCustomer={selectCustomer} />
                                 <Button style={{ backgroundColor: color.dark, margin: 10 }} block onPress={toggleModal}>
                                     <Text style={{ color: color.light, fontWeight: 'bold', fontSize: 18 }}>{dic.cancel[iLang]}</Text>
@@ -179,7 +179,7 @@ const FormInfoSale = ({ route }) => {
                         <Text style={styles.text}>Comentarios sobre la compra</Text>
                         <Textarea rowSpan={5} bordered placeholder={dic.description[iLang]} style={styles.textArea} onChangeText={text => setDescription(text)} />
                     </View>
-                    
+
 
 
 

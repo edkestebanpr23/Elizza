@@ -7,7 +7,7 @@ import { singupView as dic } from "../../data/languague";
 import GlobalContext from "../../context/global/globalContext";
 import { useNavigation } from "@react-navigation/native";
 
- 
+
 // Apollo
 import { useMutation } from "@apollo/client";
 import { CREATE_USER } from "../../graphql/petitions";
@@ -115,7 +115,7 @@ const createWorker = ({ route }) => {
 
     return (
         <TouchableWithoutFeedback onPress={dismissKeyboard} style={{ flex: 1 }}>
-            <Container style={[gS.container, { marginBottom: 50}]}>
+            <Container style={[gS.container, { marginBottom: 50 }]}>
                 <ScrollView style={{ flex: 1 }}>
                     <View style={{ marginTop: 40 }}>
                         <H1 style={[gS.title, { color: color.grad[8] }]}>{dic.title[iLang]} </H1>
@@ -176,7 +176,7 @@ const createWorker = ({ route }) => {
                                     value={passwordRe}
                                 />
                             </Item>
-                            <ListItem icon style={{marginVertical: 20}}>
+                            <ListItem icon style={{ marginVertical: 20 }}>
                                 <Left>
                                     <Button style={{ backgroundColor: color.grad[8] }}>
                                         <Icon active name="laptop-code" type="FontAwesome5" />

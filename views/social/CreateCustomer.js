@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
 import { StyleSheet, View, Keyboard, TouchableWithoutFeedback, ScrollView } from 'react-native';
-import { Container, Form, Input, Button, Item, Label, Text, H1, Toast, ListItem, Left, Icon, Body, Right, Switch, Textarea, Radio } from "native-base";
+import { Container, Content, Form, Input, Button, Item, Label, Text, H1, Toast, ListItem, Left, Icon, Body, Right, Switch, Textarea, Radio } from "native-base";
 import gS from "../../styles/globalStyles";
 import { main as color } from "../../data/colors";
 import { createClientView as dic } from "../../data/languague";
@@ -134,8 +134,8 @@ const createCustomer = () => {
     return (
         <TouchableWithoutFeedback onPress={dismissKeyboard} style={{ flex: 1 }}>
             <Container style={[gS.container]}>
-                <ScrollView style={{ flex: 1 }}>
-                    <View style={{ marginTop: 40, marginBottom: 100 }}>
+                <Content style={{ flex: 1 }}>
+                    <View style={{ marginTop: 40, marginBottom: 100, paddingHorizontal: '5%' }}>
                         <H1 style={[gS.title, { color: color.grad[8] }]}>{dic.title[iLang]} </H1>
 
                         <Form>
@@ -297,7 +297,7 @@ const createCustomer = () => {
                             _message && showAlert()
                         }
                     </View>
-                </ScrollView >
+                </Content>
             </Container>
         </TouchableWithoutFeedback>
     );

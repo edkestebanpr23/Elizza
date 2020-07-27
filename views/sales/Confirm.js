@@ -10,7 +10,7 @@ import { useNavigation } from "@react-navigation/native";
 import ListProducts from "../../components/ListProducts";
 
 import { useMutation } from "@apollo/client";
-import { CREATE_SALE } from "../../graphql/petitions";
+import { CREATE_SALE, GET_SALES } from "../../graphql/petitions";
 
 /**
  * Vista de lista de productos, aqui se agregan, se ve el total y se confirman los productos
@@ -51,8 +51,35 @@ const Confirm = () => {
     // React Navigation
     const navigation = useNavigation();
     // Apollo petition
-    const [createSale] = useMutation(CREATE_SALE);
+    const [createSale] = useMutation(CREATE_SALE, {
+        update(cache, { data: { createSale } }) {
+            try {
+                const { getSales } = cache.readQuery({ query: GET_SALES });
+                console.log("1", getSales);
+                cache.writeQuery({
+                    query: GET_SALES,
+                    data: { getSales: getSales.concat([createSale]) }
+                })
+            } catch (error) {
+                console.log(error);
+            }
+        }
+    });
 
+    // const [createClient] = useMutation(CREATE_CUSTOMER, {
+    //     update(cache, { data: { createClient } }) {
+    //         try {
+    //             const { getClients } = cache.readQuery({ query: GET_CUSTOMERS });
+    //             console.log("1", getClients);
+    //             cache.writeQuery({
+    //                 query: GET_CUSTOMERS,
+    //                 data: { getClients: getClients.concat([createClient]) }
+    //             })
+    //         } catch (error) {
+    //             console.log(error);
+    //         }
+    //     }
+    // });
 
     useEffect(() => {
         setDate(new Date(sale.register));
@@ -146,7 +173,7 @@ const Confirm = () => {
                             <DataSale title={dic.total[iLang]} value={'$ ' + parseMoney(getTotal())} />
                             <DataSale title={dic.creditInit[iLang]} value={'- $ ' + parseMoney(sale.payment[0]['payment'])} />
                             <View style={{ paddingVertical: 1, backgroundColor: color.main, marginLeft: 60, marginVertical: 5 }} />
-                            <DataSaleTotal title={dic.saldo[iLang]} value={'$ ' + parseMoney(getTotalFinal()) } />
+                            <DataSaleTotal title={dic.saldo[iLang]} value={'$ ' + parseMoney(getTotalFinal())} />
                         </View>
                     ) : (
                             <View style={{ marginTop: 30 }}>

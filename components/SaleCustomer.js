@@ -21,14 +21,21 @@ const SaleCustomer = ({ iLang, sale }) => {
     }, []);
 
     const Payments = sale.credit ? (<PaymentsView payments={sale.payments} iLang={iLang} total={getTotal(sale.products)} id={sale.id} />) : (<></>);
+    const finalized = sale.finalized ? (<Finalized />) : (<></>);
     parseToMoney(12000);
 
     return (
         <>
             <View style={{ marginBottom: 50, marginTop: 20 }}>
+                {finalized}
                 <PaymentText text={dic.totalSale[iLang] + ':'} quantity={total} bold money />
                 <PaymentText text={dic.dateSale[iLang] + ':'} value={getDate(sale.register)} bold />
-                <PaymentText text={dic.description[iLang]} value={sale.description !== '' ? sale.description : '...'} bold />
+                <PaymentText text={dic.dateSale[iLang] + ':'} value={getDate(sale.register)} bold />
+                {
+                    sale.credit && (
+                        <PaymentText text={dic.cellar[iLang]} value={sale.cellar} bold />
+                    )
+                }
                 <Separator text={dic.products[iLang]} color={color} />
                 <View style={{ marginBottom: 20 }}>
                     <ListProducts products={sale.products} />
@@ -102,8 +109,8 @@ const PaymentText = ({ date, quantity, bold, text, money, value }) => {
 
 const Finalized = () => {
     return (
-        <View>
-            <Text>Venta Finalizada</Text>
+        <View style={{ marginVertical: 15, paddingVertical: 10, backgroundColor: '#229954', }}>
+            <Text style={{ alignSelf: 'center', fontSize: 22, color: 'white' }}>Venta Finalizada</Text>
         </View>
     );
 };

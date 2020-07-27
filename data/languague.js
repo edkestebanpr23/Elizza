@@ -104,6 +104,7 @@ const language = {
         description: ['Descripción', 'Description'],
         totalPayment: ['Total abonado', 'Total payments'],
         remaining: ['Restante', 'Remaining'],
+        cellar: ['Bodega', 'Cellar'],
         addPayment: ['Añadir abono', 'Add payment'],
         finalized: ['Finalizado', 'Finalized']
     },
@@ -139,7 +140,8 @@ const language = {
         createClient: ['Creando cliente', 'Creating customer'],
         createUser: ['Creando usuario', 'Creating user'],
         functions: ['Funciones', 'Actions'],
-        search: ['Buscar', 'Search']
+        search: ['Buscar', 'Search'],
+        searchBar: ['Buscar cliente', 'Search customer']
     },
     newSale: {
         noProducts: ['Sin productos', 'No products'],
