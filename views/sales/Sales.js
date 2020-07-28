@@ -18,7 +18,9 @@ const Sales = ({ route }) => {
 
     useEffect(() => {
         // Si se redirecciona desde confirmar una venta, entonces se deben reiniciar las varibales globales
+        console.log('Restart: ', restart);
         if (restart) {
+            console.log('Entro a restart');
             setSale({});
             emptyCart();
         }

@@ -45,7 +45,7 @@ const DataSaleTotal = ({ title, value }) => {
 const Confirm = () => {
     const { iLang, user } = useContext(GlobalContext);
     const { products, sale, parseMoney } = useContext(SaleContext);
-    const [date, setDate] = useState(new Date());
+    const [date, setDate] = useState(new Date(sale.register));
     console.log('Confirm View');
     // console.log(user);
     // React Navigation
@@ -81,9 +81,9 @@ const Confirm = () => {
     //     }
     // });
 
-    useEffect(() => {
-        setDate(new Date(sale.register));
-    }, []);
+    // useEffect(() => {
+    //     setDate(new Date(sale.register));
+    // }, []);
 
     // Retorna el subtotal de la compra
     const getTotal = () => {
