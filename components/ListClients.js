@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Keyboard, View, ScrollView } from 'react-native';
-import { Container, Content, List, ListItem, Item, Text, Icon, Input, Header } from "native-base";
+import { Keyboard, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import { ListItem, Item, Text, Icon, Input, Header } from "native-base";
 import { useQuery } from "@apollo/client";
 import { GET_CUSTOMERS } from "../graphql/petitions";
 import { useNavigation } from "@react-navigation/native";
@@ -18,60 +18,23 @@ const ListClients = ({ iLang, searchbar = true, redirect = true, onSelectCustome
      * error: Si ocurrio un error...
      */
     const { data, loading, error } = useQuery(GET_CUSTOMERS);
-    // console.log('Lista de clientes:', data.getClients);
-    console.log('Loading...', loading);
+    console.log('Loading customers... ', loading);
+
+    try {
+        console.log('Lista de clientes in:', data.getClients);
+    } catch (error) {
+        console.log('>>> Clientes no han cargado');
+    }
 
     const [name, setName] = useState('');
-    const [count, setCount] = useState(0);
-    const [customers, setCustomers] = useState(<></>);
 
     const onSelect = (cli) => {
-        // console.log(cli);
         onSelectCustomer(JSON.stringify(cli));
     }
 
-    useEffect(() => {
-        if (data) {
-            console.log('Actualizando lista de clientes desde el useEffect');
-            const list = data.getClients.map(customer => (
-                <ListItem key={customer.telephone} onPress={(e) => onSelect(customer)}>
-                    <Text>{customer.name} </Text>
-                </ListItem>
-            ));
-            setCustomers(list);
-        }
-    }, [data, count]);
-
-
     const filter = text => {
         setName(text);
-        let textIn = text.toLowerCase();
-        if (data.getClients.length > 0) {
-            if (textIn !== '') {
-                let fullList = data.getClients;
-                let filterList = fullList.filter(item => {
-                    if (item.name.toLowerCase().match(textIn)) {
-                        return item;
-                    }
-                });
-                const list = filterList.map(customer => (
-                    <ListItem key={customer.telephone} onPress={() => onSelect(customer)}>
-                        <Text>{customer.name} </Text>
-                    </ListItem>
-                ));
-                setCustomers(list);
-            } else {
-                if (data) {
-                    const list = data.getClients.map(customer => (
-                        <ListItem key={customer.telephone} onPress={(e) => onSelect(customer)}>
-                            <Text>{customer.name} </Text>
-                        </ListItem>
-                    ));
-                    setCustomers(list);
-                }
-            }
-        }
-    };
+    }
 
     const clearInput = text => {
         setName('');
@@ -97,15 +60,53 @@ const ListClients = ({ iLang, searchbar = true, redirect = true, onSelectCustome
 
                 )
             }
-            <ScrollView>
-                <List>
-                    {
-                        !loading && customers
-                    }
-                </List>
-            </ScrollView>
+
+            {
+                data && (
+                    <FlatList
+                        data={data.getClients}
+                        renderItem={({ item }) => {
+                            const customer = item;
+                            if (name != '') {
+                                if (customer.name.toLowerCase().match(name.toLowerCase())) {
+                                    return (
+                                        <TouchableOpacity onPress={() => onSelect(customer)} activeOpacity={0.8} style={S.item}>
+                                            <Text style={S.itemText}>{customer.name} </Text>
+                                        </TouchableOpacity>
+                                    )
+                                } else {
+                                    return <></>;
+                                }
+                            }
+
+                            return (
+                                <TouchableOpacity onPress={() => onSelect(customer)} activeOpacity={0.8} style={S.item}>
+                                    <Text style={S.itemText}>{customer.name} </Text>
+                                </TouchableOpacity>
+                            )
+                        }}
+                        keyExtractor={item => item.id}
+                    />
+                )
+            }
+
+
         </>
     );
-}
+};
+
+const S = StyleSheet.create({
+    item: {
+        paddingVertical: 15,
+        paddingHorizontal: 10,
+        borderColor: color.grad[1],
+        borderTopWidth: 1,
+        marginHorizontal: 5
+    },
+    itemText: {
+        fontSize: 17,
+
+    }
+});
 
 export default ListClients;

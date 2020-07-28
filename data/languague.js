@@ -172,7 +172,8 @@ const language = {
         creditInit: ['Abono', 'Initial payment'],
         saldo: ['Saldo', 'Pending'],
         finalize: ['Finalizar Compra', 'Finalize purchase'],
-        payment: ['Recibido', 'Payment']
+        payment: ['Recibido', 'Payment'],
+        description: ['Descripción', 'Description'],
     },
     formProductCmp: {
         product: ['Nombre producto', 'Product name'],

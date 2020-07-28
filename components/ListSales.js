@@ -7,7 +7,7 @@ import { salesView as dic } from "../data/languague";
 import { useNavigation } from "@react-navigation/native";
 import { main as color } from "../data/colors";
 
-import { useQuery, gql } from "@apollo/client";
+import { useQuery } from "@apollo/client";
 import { GET_SALES, GET_CUSTOMERS } from "../graphql/petitions";
 
 const ListSales = ({ iLang, searchbar = true }) => {
@@ -16,19 +16,8 @@ const ListSales = ({ iLang, searchbar = true }) => {
     const { data: dataCustomers } = useQuery(GET_CUSTOMERS);
     const [textFilter, setTextFilter] = useState('');
 
-    console.log("ListSales:", data);
-
-    // useEffect(() => {
-    //     if (data) {
-    //         console.log('Actualizando lista de clientes desde el useEffect');
-    //         const list = data.getClients.map(customer => (
-    //             <ListItem key={customer.telephone} onPress={(e) => console.log(customer)}>
-    //                 <Text>{customer.name} </Text>
-    //             </ListItem>
-    //         ));
-    //         setCustomers(list);
-    //     }
-    // }, [data, count]);
+    console.log("ListSales here:", data);
+    console.log("Loading sales:", loading);
 
     // Recibe un id de cliente y retorna un cliente
     const getConstumerById = id => {
@@ -54,7 +43,7 @@ const ListSales = ({ iLang, searchbar = true }) => {
     };
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <>
             {
                 searchbar && (
                     <Header searchBar rounded style={{ backgroundColor: color.grad[9], }}>
@@ -98,7 +87,7 @@ const ListSales = ({ iLang, searchbar = true }) => {
                     />
                 )
             }
-        </SafeAreaView>
+        </>
     );
 };
 

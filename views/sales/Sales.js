@@ -9,19 +9,12 @@ import { main as color } from "../../data/colors";
 import ListSales from "../../components/ListSales";
 
 
-import { useQuery, ApolloConsumer } from "@apollo/client";
-import { GET_SALES } from "../../graphql/petitions";
-
 const Sales = ({ route }) => {
     const { restart } = route.params || false;
     const { iLang } = useContext(GlobalContext);
     const { setSale, emptyCart, payCounter } = useContext(SaleContext);
-    // const []
+
     const navigation = useNavigation();
-    const { data, loading, error } = useQuery(GET_SALES);
-    // console.log(data);
-    // console.log(loading);
-    // console.log(error);
 
     useEffect(() => {
         // Si se redirecciona desde confirmar una venta, entonces se deben reiniciar las varibales globales
@@ -38,19 +31,8 @@ const Sales = ({ route }) => {
     return (
         <View style={{ flex: 1 }}>
 
-            {/* <SearchBar searchBar rounded style={{ backgroundColor: color.grad[9], }}>
-                <Item style={{ backgroundColor: color.light }} >
-                    <Icon name="ios-search" onPress={() => console.log(1)} style={{ color: color.dark }} />
-                    <Input placeholder={dic.search[iLang]} />
-                    <Icon name="ios-close-circle" onPress={() => dismissKeyboard()} style={{ color: color.dark }} />
-                </Item>
-            </SearchBar> */}
+            <ListSales iLang={iLang} />
 
-            {/* <ScrollView style={{ flex: 1 }}> */}
-            <View style={{ flex: 1 }}>
-                <ListSales iLang={iLang} />
-            </View>
-            {/* </ScrollView> */}
 
             <View>
                 <Fab

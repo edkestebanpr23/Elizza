@@ -160,6 +160,7 @@ const Confirm = () => {
                     <DataSale title={dic.customer[iLang]} value={sale.temp.name} />
                     <DataSale title={dic.date[iLang]} value={`${date.getDate()} / ${date.getMonth() + 1} / ${date.getFullYear()}`} />
                     <DataSale title={dic.credit[iLang]} value={sale.credit ? dic.yes[iLang] : dic.no[iLang]} />
+                    <DataSale title={dic.description[iLang]} value={sale.description} />
 
 
                 </View>
